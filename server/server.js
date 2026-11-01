@@ -129,7 +129,6 @@ async function makeProvider(name) {
     };
     return {
       name, ready: () => true,
-      // expects an approved "authentication" template that has the code as its body parameter and a copy-code button
       sendOtp: ({ phone, otp }) => call(phone, {
         name: WA_OTP_TEMPLATE, language: { code: lang },
         components: [
@@ -137,7 +136,6 @@ async function makeProvider(name) {
           { type: 'button', sub_type: 'url', index: '0', parameters: [{ type: 'text', text: otp }] }
         ]
       }),
-      // optional: needs an approved template with the name as its only body parameter
       sendWelcome: async ({ phone, name: n }) => {
         if (!WA_WELCOME_TEMPLATE) return;
         await call(phone, { name: WA_WELCOME_TEMPLATE, language: { code: lang }, components: [{ type: 'body', parameters: [{ type: 'text', text: n }] }] });
@@ -145,19 +143,20 @@ async function makeProvider(name) {
     };
   }
 
-  // default: whatsapp-web.js (your own WhatsApp account, scanned through a QR code)
+  // default: whatsapp-web.js (cleaned up for stable execution)
   console.warn('\n⚠️  WA_PROVIDER=webjs uses an unofficial library and your personal WhatsApp account.');
   console.warn('    WhatsApp can ban accounts that message many people this way. Fine for local testing,');
   console.warn('    but move to WA_PROVIDER=cloud (official API) before a public launch.\n');
   const pkg = (await import('whatsapp-web.js')).default;
   const qrcode = (await import('qrcode-terminal')).default;
- const client = new pkg.Client({ 
+  
+  const client = new pkg.Client({ 
     authStrategy: new pkg.LocalAuth(),
     puppeteer: {
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
   });
+
   let ready = false;
   client.on('qr', qr => { console.log('\n📱 Scan this QR code with the WhatsApp account that will send the codes:'); qrcode.generate(qr, { small: true }); });
   client.on('ready', () => { ready = true; console.log('✅ WhatsApp client is ready.'); });
@@ -286,7 +285,7 @@ app.get('/api/admin/waitlist', requireAdmin, (req, res) =>
   req.query.format === 'csv'
     ? sendCsv(res, waitlist, ['verifiedAt', 'name', 'phone', 'email', 'role', 'stream', 'year', 'university', 'projectType', 'pain'], 'waitlist.csv')
     : res.json(waitlist));
-app.get('/api/admin/contacts', requireAdmin, (req, res) =>
+app.get('/api/admin/contacts', requireAdmin, (rows, res) =>
   req.query.format === 'csv'
     ? sendCsv(res, contacts, ['submittedAt', 'name', 'email', 'topic', 'message'], 'contacts.csv')
     : res.json(contacts));
