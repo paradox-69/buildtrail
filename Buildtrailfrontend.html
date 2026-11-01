@@ -748,11 +748,10 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
 
 <script>
   var CONFIG = {
-    // Backend address. On your computer it uses the local server automatically.
-    // For the live site, paste your deployed backend URL (https) into PROD_API.
+    // Backend address configured with your live Render URL
     API_BASE: (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:")
       ? "http://localhost:5000"
-      : "",            // e.g. "https://api.yourdomain.in"
+      : "https://buildtrail.onrender.com", 
     WHATSAPP: "",      // number with country code, digits only, e.g. 919876543210
     EMAIL: "",         // e.g. hello@yourdomain.in (also shown in the Privacy Policy and Terms)
     LINKEDIN: "",      // e.g. https://www.linkedin.com/in/yourname
