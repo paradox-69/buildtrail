@@ -151,7 +151,13 @@ async function makeProvider(name) {
   console.warn('    but move to WA_PROVIDER=cloud (official API) before a public launch.\n');
   const pkg = (await import('whatsapp-web.js')).default;
   const qrcode = (await import('qrcode-terminal')).default;
-  const client = new pkg.Client({ authStrategy: new pkg.LocalAuth() });
+ const client = new pkg.Client({ 
+    authStrategy: new pkg.LocalAuth(),
+    puppeteer: {
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+    }
+  });
   let ready = false;
   client.on('qr', qr => { console.log('\n📱 Scan this QR code with the WhatsApp account that will send the codes:'); qrcode.generate(qr, { small: true }); });
   client.on('ready', () => { ready = true; console.log('✅ WhatsApp client is ready.'); });
