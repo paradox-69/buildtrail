@@ -285,7 +285,7 @@ app.get('/api/admin/waitlist', requireAdmin, (req, res) =>
   req.query.format === 'csv'
     ? sendCsv(res, waitlist, ['verifiedAt', 'name', 'phone', 'email', 'role', 'stream', 'year', 'university', 'projectType', 'pain'], 'waitlist.csv')
     : res.json(waitlist));
-app.get('/api/admin/contacts', requireAdmin, (rows, res) =>
+app.get('/api/admin/contacts', requireAdmin, (req, res) =>
   req.query.format === 'csv'
     ? sendCsv(res, contacts, ['submittedAt', 'name', 'email', 'topic', 'message'], 'contacts.csv')
     : res.json(contacts));
