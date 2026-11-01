@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BuildTrail — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Poppins',sans-serif;background:#EFEBE3;color:#0B1530;margin:0;padding:30px}
+  .wrap{max-width:1200px;margin:0 auto}
+  h1{margin-bottom:5px}
+  .mut{color:#64748B;font-size:14px;margin-bottom:20px}
+  .tabs{margin:20px 0;display:flex;gap:10px}
+  button{padding:10px 20px;font:inherit;background:#0B1530;color:#fff;border:0;border-radius:8px;cursor:pointer;transition:0.2s}
+  button.active{background:#4338CA}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+  th,td{padding:14px 16px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
+  th{background:#f8f9fa;font-weight:600}
+  .section{display:none}
+  .section.active{display:block}
+  .empty{text-align:center;padding:30px;color:#888;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>BuildTrail Admin Dashboard</h1>
+  <p class="mut">Waitlist users aur Contact messages ka live data (Auto-refreshes every 10s)</p>
+  
+  <div class="tabs">
+    <button id="btn-w" class="active" onclick="switchTab('waitlist')">Waitlist Users (<span id="count-w">0</span>)</button>
+    <button id="btn-c" onclick="switchTab('contact')">Contact Messages (<span id="count-c">0</span>)</button>
+  </div>
+
+  <!-- Waitlist Table -->
+  <div id="sec-waitlist" class="section active">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Phone</th><th>Email</th><th>Role</th><th>Stream</th><th>College</th><th>Joined At</th></tr>
+      </thead>
+      <tbody id="tb-waitlist">
+        <tr><td colspan="7" class="empty">Loading waitlist data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Contact Table -->
+  <div id="sec-contact" class="section">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Topic</th><th>Message</th><th>Submitted At</th></tr>
+      </thead>
+      <tbody id="tb-contact">
+        <tr><td colspan="5" class="empty">Loading contact messages...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const API = "http://localhost:5000/api/admin";
+
+  function switchTab(tab) {
+    document.getElementById('sec-waitlist').classList.toggle('active', tab === 'waitlist');
+    document.getElementById('sec-contact').classList.toggle('active', tab === 'contact');
+    document.getElementById('btn-w').classList.toggle('active', tab === 'waitlist');
+    document.getElementById('btn-c').classList.toggle('active', tab === 'contact');
+  }
+
+  async function loadData() {
+    try {
+      // Fetch Waitlist
+      const resW = await fetch(API + '/waitlist');
+      const waitlist = await resW.json();
+      document.getElementById('count-w').textContent = waitlist.length;
+      
+      const tbWaitlist = document.getElementById('tb-waitlist');
+      if (waitlist.length === 0) {
+        tbWaitlist.innerHTML = `<tr><td colspan="7" class="empty">Abhi tak koi waitlist user register nahi hua hai.</td></tr>`;
+      } else {
+        tbWaitlist.innerHTML = waitlist.map(u => `
+          <tr>
+            <td><b>${u.name || '-'}</b></td>
+            <td>+${u.phone || '-'}</td>
+            <td>${u.email || '-'}</td>
+            <td>${u.role || '-'}</td>
+            <td>${u.stream || '-'}</td>
+            <td>${u.university || u.college || '-'}</td>
+            <td>${u.verifiedAt ? new Date(u.verifiedAt).toLocaleString() : '-'}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Fetch Contacts
+      const resC = await fetch(API + '/contacts');
+      const contacts = await resC.json();
+      document.getElementById('count-c').textContent = contacts.length;
+      
+      const tbContact = document.getElementById('tb-contact');
+      if (contacts.length === 0) {
+        tbContact.innerHTML = `<tr><td colspan="5" class="empty">Abhi tak koi contact message nahi aaya hai.</td></tr>`;
+      } else {
+        tbContact.innerHTML = contacts.map(c => `
+          <tr>
+            <td><b>${c.name || '-'}</b></td>
+            <td>${c.email || '-'}</td>
+            <td>${c.topic || '-'}</td>
+            <td>${c.message || '-'}</td>
+            <td>${c.submittedAt ? new Date(c.submittedAt).toLocaleString() : '-'}</td>
+          </tr>
+        `).join('');
+      }
+    } catch (err) {
+      console.error("Error loading admin data:", err);
+    }
+  }
+
+  loadData();
+  setInterval(loadData, 10000); // Auto-refresh every 10 seconds
+</script>
+</body>
+</html>

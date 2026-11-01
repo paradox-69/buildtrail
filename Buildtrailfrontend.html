@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BuildTrail — Launching soon</title>
+<meta name="description" content="BuildTrail is the project workspace for student builders: roadmaps, bug records, retest proof and guide-ready reports. Join the waitlist.">
+<meta name="theme-color" content="#FFFFFF">
+<!-- Share preview: replace https://yourdomain.in with your real domain and upload og.jpg next to this file -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildTrail">
+<meta property="og:title" content="BuildTrail — Launching soon">
+<meta property="og:description" content="The project workspace for student builders: roadmaps, bug records, retest proof and guide-ready reports.">
+<meta property="og:url" content="https://yourdomain.in/">
+<meta property="og:image" content="https://yourdomain.in/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2096%2096%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22fv%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%232563EB%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%230B1E5B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%2296%22%20height=%2296%22%20rx=%2222%22%20fill=%22url%28%23fv%29%22/%3E%3Cpath%20d=%22M32%2072V24H49a12%2012%200%200%201%200%2024H54a12%2012%200%200%201%200%2024H32M32%2048H49%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%227%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2224%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2224%22%20r=%222.6%22%20fill=%22%231E3A8A%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2248%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2248%22%20r=%222.6%22%20fill=%22%231E3A8A%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2272%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2272%22%20r=%222.6%22%20fill=%22%231E3A8A%22/%3E%3Ccircle%20cx=%2266%22%20cy=%2260%22%20r=%228%22%20fill=%22%2338BDF8%22%20stroke=%22%230B1530%22%20stroke-width=%223%22/%3E%3Cpath%20d=%22M62.4%2060.2l2.6%202.6%204.6-5.2%22%20fill=%22none%22%20stroke=%22%230B1530%22%20stroke-width=%222.4%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#0B1530;--mut:#4A5775;--line:rgba(37,99,235,.16);--soft:rgba(37,99,235,.05);--ac:#2563EB;--mint:#38BDF8;--navy:#0B1530;--rec:#0B1530;--recline:rgba(255,255,255,.12);--err:#B42318;color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(84px + env(safe-area-inset-top,0px))}
+*,*:before,*:after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Poppins','Segoe UI',Helvetica,Arial,sans-serif;font-weight:300;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:30}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+em{font-family:'Lora',Georgia,serif;font-style:italic;font-weight:500}
+.eyebrow{display:flex;align-items:center;gap:14px;margin:0 0 22px;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.eyebrow:before{content:"";width:34px;height:2px;background:var(--mint);flex:none}
+h1,h2{margin:0 0 .5em;font-weight:500;letter-spacing:-.04em;line-height:1.05}
+h1{font-size:clamp(44px,6.6vw,92px);line-height:.99;letter-spacing:-.045em}
+h1 em,h2 em{color:var(--ac);letter-spacing:-.02em}
+h1 em.blk{display:block;font-size:1.12em;line-height:1.05}
+h2{font-size:clamp(30px,4.2vw,52px)}
+h3{margin:0 0 6px;font-size:clamp(20px,2.3vw,26px);font-weight:500;letter-spacing:-.02em;line-height:1.25}
+p{margin:0 0 1em}
+.lede{max-width:34em;margin:0 0 32px;font-size:clamp(17px,1.7vw,20px);color:var(--mut)}
+.mut{color:var(--mut)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:#F4F8FF}
+.bar{display:flex;align-items:center;gap:18px;height:72px}
+.brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;font-weight:700;font-size:22px;letter-spacing:-.03em;color:#fff;white-space:nowrap}
+.brand svg{flex:none;width:36px;height:36px}
+.brand .wm{display:block;line-height:1}
+.brand .wm span{font-weight:400;color:#93C5FD}
+.bar nav{margin-left:auto;display:flex;align-items:center;gap:4px}
+.bar nav a{text-decoration:none;font-size:14.5px;font-weight:400;color:#B9C2D6;padding:8px 14px;border-radius:99px}
+.bar nav a:hover{color:#fff}
+.bar nav a[aria-current]{color:#fff;font-weight:500;box-shadow:inset 0 -2px 0 var(--mint)}
+.bar nav a.cta-n{background:var(--mint);color:#0B1530;font-weight:500;margin-left:10px;padding:9px 20px;box-shadow:none}
+.mb{display:none;font:inherit;font-size:12px;font-weight:500;background:none;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:7px 14px;cursor:pointer}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:var(--bg);padding:15px 28px;border-radius:99px;font:inherit;font-weight:500;font-size:15px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.btn.inv{background:var(--mint);color:#0B1530}
+.btn.sec-btn{background:transparent;color:var(--ink);border:1px solid var(--line);padding:12px 22px;font-size:14px}
+.lnk{font-size:15px;font-weight:400;text-underline-offset:5px}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr);gap:clamp(36px,6vw,80px);align-items:center;padding:clamp(44px,7vw,96px) 0 clamp(60px,8vw,108px)}
+.status{display:flex;align-items:center;gap:12px;margin:36px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mut)}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--ac);flex:none}
+.rec{background:var(--rec);color:#F4F8FF;border-radius:14px;padding:clamp(20px,3vw,30px);border:1px solid var(--recline)}
+.rec .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.rec .id{font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--mint)}
+.rec .ver{display:inline-flex;align-items:center;gap:7px;background:var(--mint);color:#0B1530;font-size:12px;font-weight:600;padding:5px 12px;border-radius:99px}
+.rec h3{margin:20px 0 0;font-size:clamp(21px,2.4vw,27px)}
+.rec dl{margin:20px 0 0;border-top:1px solid var(--recline)}
+.rec dl div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--recline);font-size:14px}
+.rec dt{color:#A3AEC4}.rec dd{margin:0;font-weight:500;text-align:right}.rec dd.g{color:var(--mint)}
+.rec .chart{display:block;width:100%;height:auto;margin-top:18px;border-radius:8px;background:rgba(255,255,255,.06)}
+
+/* sections */
+.sec{border-top:1px solid var(--line);padding:clamp(56px,8vw,104px) 0}
+.pg{padding:clamp(44px,6vw,84px) 0 clamp(52px,7vw,96px)}
+.split{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,6vw,92px)}
+.sticky{position:sticky;top:104px;align-self:start}
+.list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.list>li{display:grid;grid-template-columns:60px 1fr;gap:10px;padding:26px 0;border-bottom:1px solid var(--line)}
+.list .n{font-family:'Lora',Georgia,serif;font-style:italic;font-size:30px;line-height:1.2;color:var(--ac)}
+.list p{margin:0;color:var(--mut);max-width:32em}
+.tag{display:inline-block;margin-left:10px;vertical-align:middle;background:var(--mint);color:#0B1530;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+.later{margin:26px 0 0;font-size:14px;color:var(--mut)}
+.later b,.k{font-weight:600;letter-spacing:.18em;font-size:11px;color:var(--ink);margin-right:10px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);margin-top:34px;border-top:2px solid var(--ink)}
+.cols>div{padding:22px 26px 6px 0}
+.cols>div+div{padding-left:26px;border-left:1px solid var(--line)}
+.cols h3{font-size:19px;font-weight:600}
+.cols p{font-size:15px;color:var(--mut)}
+.cols .k{display:block;margin:0 0 10px;color:var(--ac)}
+
+/* steps trail (about) */
+.trail{list-style:none;margin:36px 0 0;padding:0;position:relative}
+.trail:before{content:"";position:absolute;left:11px;top:34px;bottom:34px;width:2px;background:var(--ink)}
+.trail li{position:relative;padding:20px 0 22px 56px;border-bottom:1px solid var(--line)}
+.trail li:first-child{border-top:1px solid var(--line)}
+.trail li:before{content:"";position:absolute;left:0;top:24px;width:24px;height:24px;border-radius:50%;border:2.5px solid var(--ink);background:var(--bg)}
+.trail li.end:before{background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 12.5l3.8 3.8 7.2-8' fill='none' stroke='%230B1530' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.trail p{margin:0;color:var(--mut);max-width:42em}
+.trail .k{display:block;margin:0 0 4px;color:var(--ac)}
+
+.note{margin:22px 0 0;font-size:13.5px;color:var(--mut);max-width:44em}
+
+/* forms */
+.formcard{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,3.4vw,40px)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px 20px}
+.full{grid-column:1/-1}
+label{display:block;margin:0 0 6px;font-size:13px;font-weight:500}
+label i{color:var(--ac);font-style:normal}
+input,select,textarea{width:100%;font:inherit;font-size:16px;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+textarea{resize:vertical;min-height:110px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px;border-color:var(--ac)}
+[aria-invalid="true"]{border-color:var(--err)}
+.err{display:block;margin-top:5px;font-size:12.5px;color:var(--err)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.chk{display:flex;gap:12px;align-items:flex-start;font-weight:300;font-size:14px;color:var(--mut)}
+.chk input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:#2563EB}
+.stat{min-height:1.4em;margin:14px 0 0;font-size:14px}
+.stat.bad{color:var(--err)}
+.thanks{padding:8px 0}
+.thanks .tk{width:44px;height:44px;border-radius:50%;background:var(--mint);border:2.5px solid #0B1530;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.perks{list-style:none;margin:30px 0 0;padding:0;border-top:2px solid var(--ink)}
+.perks li{padding:16px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.perks b{display:block;font-weight:600}
+.cd{margin:28px 0 0;border-top:2px solid var(--ink)}
+.cd div{padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.cd .k{display:block;margin:0 0 2px;color:var(--ac)}
+
+/* policy pages, footer links, example label, founder note */
+.prose{max-width:46em}
+.prose h2{font-size:clamp(20px,2.4vw,26px);margin:1.8em 0 .5em;letter-spacing:-.02em}
+.prose p,.prose li{color:var(--mut);font-size:16.5px}
+.prose ul{margin:0 0 1em;padding-left:1.3em}
+.prose li{margin:0 0 .4em}
+.prose a{color:var(--ink)}
+.prose .upd{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.fbot a{color:inherit;text-underline-offset:3px}
+.fbot .lk{display:inline-flex;gap:18px}
+.excap{margin:18px 0 0;font-size:10.5px;font-weight:600;letter-spacing:.2em;color:#8E9AB4}
+.sig{margin:0;font-weight:500;color:var(--ink)}
+/* OTP Verification Box */
+.otp-box{padding:8px 0}
+.otp-box .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.1);color:var(--ac);font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase}
+.otp-input{font-size:24px;font-weight:600;letter-spacing:.35em;text-align:center;max-width:240px;margin:10px 0 6px}
+.otp-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+
+/* student benefits */
+.ben{display:grid;grid-template-columns:1fr 1fr;margin-top:34px;border-top:2px solid var(--ink)}
+.ben>div{padding:26px 34px 28px 0;border-bottom:1px solid var(--line)}
+.ben>div:nth-child(even){padding:26px 0 28px 34px;border-left:1px solid var(--line)}
+.ben .k{display:block;color:var(--ac);margin:0 0 10px}
+.ben h3{font-size:21px;font-weight:600;letter-spacing:-.02em}
+.ben p{margin:0;font-size:15.5px;color:var(--mut);max-width:30em}
+
+/* home sections */
+.cmp{margin-top:34px;border-top:2px solid var(--ink)}
+.cmp .r{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.cmp .r>div{padding:20px 28px 20px 0;font-size:16.5px}
+.cmp .r>div+div{padding-left:28px;border-left:1px solid var(--line);font-weight:400}
+.cmp .r>div:first-child{color:var(--mut)}
+.cmp .h>div{padding-top:15px;padding-bottom:15px;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.cmp .h>div+div{color:var(--ac)}
+.flow{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink)}
+.flow.four{grid-template-columns:repeat(4,1fr)}
+.flow li{padding:22px 20px 6px 0}
+.flow li+li{padding-left:20px;border-left:1px solid var(--line)}
+.flow .k{display:block;color:var(--ac);margin:0 0 10px}
+.flow h3{font-size:18px;font-weight:600}
+.flow p{font-size:14.5px;color:var(--mut);margin:0}
+.flow .tag{margin:0 0 0 8px;font-size:9.5px;padding:2px 8px}
+.more{display:inline-block;margin-top:28px;font-size:15px;font-weight:400;text-underline-offset:5px}
+.faq{border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;font-size:clamp(17px,2vw,21px);font-weight:500;letter-spacing:-.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-weight:300;font-size:26px;line-height:1;color:var(--mut);flex:none}
+.faq details[open] summary:after{content:"\2013"}
+.faq p{margin:0 0 22px;max-width:44em;color:var(--mut)}
+.reach{margin:30px 0 0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.reach li{border-bottom:1px solid var(--line)}
+.reach a,.reach .off{display:grid;grid-template-columns:110px 1fr 28px;gap:12px;align-items:center;padding:19px 0;text-decoration:none}
+.reach .k{margin:0;color:var(--ac)}
+.reach .v{font-size:17px;font-weight:400;overflow-wrap:anywhere}
+.reach .ar{font-size:20px;text-align:right;transition:transform .15s}
+.reach a:hover .ar{transform:translate(3px,-3px)}
+.reach a:hover .v{text-decoration:underline;text-underline-offset:4px}
+.reach .off{color:var(--mut)}
+.reach .off .v{font-size:15px}
+
+/* cta + footer */
+.cta-sec{border-top:1px solid var(--line);padding:clamp(64px,9vw,120px) 0}
+.cta-sec .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(28px,6vw,80px);align-items:end}
+.cta-sec h2{font-size:clamp(46px,7.2vw,96px);margin:0;line-height:1}
+.cta-sec p{color:var(--mut);max-width:24em;margin:0 0 24px}
+footer{background:var(--navy);color:#C4CCDD;padding:clamp(48px,6vw,76px) 0 28px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px}
+.fgrid h4{margin:0 0 14px;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#8E9AB4}
+.fgrid ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.fgrid li{margin:0 0 9px}
+.fgrid a{text-decoration:none;color:#E6EAF3}.fgrid a.brand{color:#fff}
+.fgrid a:hover{text-decoration:underline;text-underline-offset:4px}
+.fgrid .blurb{font-size:14.5px;color:#9AA6BF;max-width:25em;margin:14px 0 0}
+.fgrid small{color:#8E9AB4;font-size:11px;margin-left:6px}
+.fbot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:#8E9AB4}
+.fbot b{font-weight:600;letter-spacing:.2em;font-size:11px;color:var(--mint)}
+
+@media (max-width:900px){
+  .hero,.split,.cta-sec .wrap{grid-template-columns:1fr}
+  .sticky{position:static}
+  .mb{display:inline-block;margin-left:auto}
+  .bar nav{display:none;position:absolute;top:100%;left:0;right:0;margin:0;flex-direction:column;align-items:stretch;gap:0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.14);padding:10px clamp(20px,5vw,48px) 18px}
+  .bar nav.open{display:flex}
+  .bar nav a{padding:13px 0;border-radius:0;border-bottom:1px solid rgba(255,255,255,.12);box-shadow:none!important}
+  .bar nav a.cta-n{margin:14px 0 0;text-align:center;border:0;border-radius:99px;padding:13px 20px}
+  .cols{grid-template-columns:1fr}
+  .cols>div,.cols>div+div{padding:18px 0;border-left:0}
+  .cols>div+div{border-top:1px solid var(--line)}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .fg{grid-template-columns:1fr}
+  .list>li{grid-template-columns:44px 1fr}
+  .trail li{padding-left:46px}
+  .fgrid{grid-template-columns:1fr}
+}
+@media (max-width:900px){.flow,.flow.four{grid-template-columns:1fr 1fr}.flow li,.flow li+li{padding:20px 16px 8px 0;border-left:0}.flow li:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}}
+@media (max-width:640px){
+  .ben{grid-template-columns:1fr}
+  .ben>div,.ben>div:nth-child(even){padding:22px 0 24px;border-left:0}
+  .cmp .r{grid-template-columns:1fr}
+  .cmp .h{display:none}
+  .cmp .r>div,.cmp .r>div+div{padding:14px 0 2px;border-left:0}
+  .cmp .r>div+div{padding-top:0;padding-bottom:18px}
+  .cmp .r>div:first-child:before,.cmp .r>div+div:before{display:block;font-size:10.5px;font-weight:600;letter-spacing:.18em;margin-bottom:3px}
+  .cmp .r>div:first-child:before{content:"WITHOUT";color:var(--mut)}
+  .cmp .r>div+div:before{content:"WITH BUILDTRAIL";color:var(--ac)}
+  .flow,.flow.four{grid-template-columns:1fr}
+  .flow li,.flow li+li,.flow li:nth-child(even){padding:18px 0 6px;border-left:0}
+  .reach a,.reach .off{grid-template-columns:92px 1fr 24px}
+}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+
+/* ===== v2 redesign: white + blue, 3D motion ===== */
+html,body{overflow-x:clip}
+body{background:#fff}
+body:before{background:#fff}
+@keyframes up{from{opacity:0;transform:translateY(26px)}}
+@keyframes in3d{from{opacity:0;transform:perspective(1400px) rotateY(-30deg) rotateX(10deg) translateX(50px)}}
+@keyframes fl{50%{transform:translateZ(110px) translateY(-12px)}}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.15)}}
+@keyframes grid{to{background-position:0 56px}}
+@keyframes mq{to{transform:translateX(-50%)}}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(37,99,235,0)}100%{box-shadow:0 0 0 0 rgba(37,99,235,0)}}
+@keyframes dr{to{stroke-dashoffset:0}}
+.prog{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:3px;z-index:40;background:linear-gradient(90deg,#2563EB,#38BDF8);transform-origin:0 50%;transform:scaleX(0)}
+
+/* header */
+.top{background:rgba(255,255,255,.78);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px);color:var(--ink);border-bottom:1px solid rgba(37,99,235,.12)}
+.top .brand{color:var(--ink)}
+.top .brand .wm span{color:var(--ac)}
+.top .bar nav a{color:#3B4A6B}
+.top .bar nav a:hover{color:var(--ink);background:rgba(37,99,235,.07)}
+.top .bar nav a[aria-current]{color:#1D4ED8;font-weight:500;background:rgba(37,99,235,.1);box-shadow:none}
+.top .bar nav a.cta-n{background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;box-shadow:0 10px 24px -10px rgba(37,99,235,.7)}
+.mb{color:var(--ink);border-color:rgba(37,99,235,.35)}
+
+/* headings, buttons */
+h1 em,h2 em{background:linear-gradient(100deg,#1D4ED8,#0EA5E9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:.06em}
+.eyebrow:before{background:linear-gradient(90deg,#2563EB,#38BDF8);border-radius:2px}
+.btn{position:relative;overflow:hidden;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;box-shadow:0 16px 30px -14px rgba(37,99,235,.75);transition:transform .2s,box-shadow .2s}
+.btn:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 22px 36px -14px rgba(37,99,235,.85)}
+.btn:hover:after{transform:translateX(120%)}
+.btn.sec-btn{box-shadow:none}
+.btn.sec-btn:after{display:none}
+.lnk,.more{color:#1D4ED8}
+
+/* hero */
+#v-home{position:relative}
+.heroBg{position:absolute;inset:0 0 auto;height:min(1000px,115vh);overflow:hidden;pointer-events:none;z-index:0;background:radial-gradient(900px 480px at 88% 0,rgba(56,189,248,.22),transparent 60%),radial-gradient(760px 480px at 0 10%,rgba(37,99,235,.13),transparent 60%),linear-gradient(#F3F7FF,#fff);-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+.heroBg i{position:absolute;border-radius:50%;filter:blur(64px);opacity:.45;animation:drift 14s ease-in-out infinite alternate}
+.heroBg i:nth-child(1){width:360px;height:360px;background:#60A5FA;left:-90px;top:90px}
+.heroBg i:nth-child(2){width:300px;height:300px;background:#7DD3FC;right:8%;top:-70px;animation-delay:-5s}
+.heroBg i:nth-child(3){width:240px;height:240px;background:#3B82F6;right:-60px;top:380px;animation-delay:-9s}
+.heroBg:after{content:"";position:absolute;left:-25%;right:-25%;bottom:-6%;height:58%;background-image:linear-gradient(rgba(37,99,235,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.2) 1px,transparent 1px);background-size:56px 56px;transform:perspective(520px) rotateX(62deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(to top,#000,transparent 85%);mask-image:linear-gradient(to top,#000,transparent 85%);animation:grid 5s linear infinite}
+.hero{position:relative;z-index:1}
+.js .hero>div>*{animation:up .85s cubic-bezier(.2,.7,.2,1) both}
+.js .hero>div>:nth-child(2){animation-delay:.08s}.js .hero>div>:nth-child(3){animation-delay:.16s}.js .hero>div>:nth-child(4){animation-delay:.24s}.js .hero>div>:nth-child(5){animation-delay:.32s}
+.status{border-top-color:rgba(37,99,235,.2)}
+.status i{background:var(--ac);animation:pulse 2s infinite;box-shadow:0 0 0 0 rgba(37,99,235,.5)}
+.stage{position:relative;perspective:1400px;padding:22px}
+.js .stage{animation:in3d 1.2s .2s cubic-bezier(.2,.7,.2,1) both}
+.tilt{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform}
+.rec{background:linear-gradient(155deg,#12307A 0%,#0B1530 62%);border:1px solid rgba(147,197,253,.28);border-radius:24px;box-shadow:0 50px 90px -34px rgba(29,78,216,.7),0 2px 0 rgba(255,255,255,.08) inset}
+.chip{position:absolute;display:flex;align-items:center;gap:10px;background:#fff;color:var(--ink);padding:10px 16px;border-radius:14px;font-size:13px;font-weight:500;white-space:nowrap;border:1px solid rgba(37,99,235,.14);box-shadow:0 24px 44px -16px rgba(29,78,216,.5);transform:translateZ(80px);animation:fl 5.5s ease-in-out infinite}
+.chip .d{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#2563EB,#38BDF8);display:inline-flex;align-items:center;justify-content:center}
+.c1{top:2px;right:-4px}.c2{left:-6px;top:44%;animation-delay:-1.8s}.c3{bottom:2px;right:12%;animation-delay:-3.4s}
+.rec .chart path{stroke-dasharray:400;stroke-dashoffset:400;animation:dr 1.6s .9s ease forwards}
+
+/* marquee */
+.mq{position:relative;z-index:1;overflow:hidden;background:#fff;border-block:1px solid rgba(37,99,235,.12);padding:20px 0}
+.mq div{display:flex;width:max-content;animation:mq 36s linear infinite}
+.mq:hover div{animation-play-state:paused}
+.mq span{display:inline-flex;align-items:center;gap:28px;padding-left:28px;font-size:clamp(18px,2.4vw,26px);font-weight:500;letter-spacing:-.02em;color:#1E3A8A;white-space:nowrap}
+.mq span:after{content:"";width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,#2563EB,#38BDF8)}
+
+/* sections */
+.sec{border-top:0}
+.sec:nth-of-type(even){background:linear-gradient(#F4F8FF,#fff 80%)}
+.sec:nth-of-type(odd){background:#fff}
+.hero.wrap{background:none}
+
+/* card system (same content, now tactile cards) */
+.cols,.ben,.flow,.list,.faq{border-top:0}
+.cols,.ben{gap:20px}.flow{gap:14px}.list{display:grid;gap:16px}
+.cols>div,.cols>div+div,.ben>div,.ben>div:nth-child(even),.flow li,.flow li+li,.flow li:nth-child(even),.list>li{background:#fff;border:1px solid rgba(37,99,235,.14);border-radius:22px;padding:28px;box-shadow:0 1px 0 #fff inset,0 20px 44px -30px rgba(29,78,216,.45)}
+.flow li,.flow li+li,.flow li:nth-child(even){padding:22px 20px}
+.list>li{padding:26px 28px}
+.tcard{position:relative;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:opacity .7s ease calc(var(--d,0)*70ms),translate .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*70ms),transform .25s ease 0s,box-shadow .3s ease 0s,border-color .3s ease 0s}
+.tcard:hover{--ty:-6px;border-color:rgba(37,99,235,.45);box-shadow:0 36px 64px -30px rgba(29,78,216,.6)}
+.tcard:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%),rgba(96,165,250,.2),transparent 62%)}
+.tcard:hover:after{opacity:1}
+.cmp{border-top:0}
+.cmp .r{border:1px solid rgba(37,99,235,.14);border-radius:18px;background:#fff;margin-bottom:12px;overflow:hidden;box-shadow:0 16px 32px -26px rgba(29,78,216,.45)}
+.cmp .r>div,.cmp .r>div+div{padding:20px 26px}
+.cmp .r>div+div{background:linear-gradient(90deg,rgba(37,99,235,.06),rgba(56,189,248,.1));border-left:1px solid rgba(37,99,235,.14)}
+.cmp .r.h{background:none;border:0;box-shadow:none;margin-bottom:2px}
+.cmp .r.h>div,.cmp .r.h>div+div{padding:8px 26px;background:none;border:0}
+.faq{display:grid;gap:12px}
+.faq details{background:#fff;border:1px solid rgba(37,99,235,.14);border-radius:18px;padding:0 26px;transition:box-shadow .3s,border-color .3s}
+.faq details[open]{border-color:var(--ac);box-shadow:0 24px 44px -30px rgba(29,78,216,.55)}
+.faq summary:after{width:32px;height:32px;border-radius:50%;background:rgba(37,99,235,.09);color:var(--ac);display:flex;align-items:center;justify-content:center;font-size:22px}
+.trail:before{background:linear-gradient(var(--ac),var(--mint))}
+.trail li:before{border-color:var(--ac)}
+.reach,.perks,.cd{border-top-color:var(--ac)}
+.formcard{background:#fff;border:1px solid rgba(37,99,235,.14);border-radius:26px;box-shadow:0 40px 80px -40px rgba(29,78,216,.5)}
+input,select,textarea{background:#fff;border-radius:12px;border-color:rgba(37,99,235,.22)}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 4px rgba(37,99,235,.14)}
+
+/* scroll reveal: uses translate so it never fights the 3D transform */
+.js .rv{opacity:0;translate:0 30px}
+.js .rv.in{opacity:1;translate:0 0}
+.js .rv:not(.tcard){transition:opacity .7s ease calc(var(--d,0)*70ms),translate .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*70ms)}
+
+/* closing call to action */
+.cta-sec{position:relative;overflow:hidden;border:0;margin:0 clamp(12px,3vw,32px) clamp(28px,4vw,52px);border-radius:34px;color:#fff;background:radial-gradient(720px 380px at 92% 0,rgba(56,189,248,.55),transparent 60%),linear-gradient(135deg,#1D4ED8,#0B1E5B)}
+.cta-sec:before{content:"";position:absolute;left:-20%;right:-20%;bottom:-20%;height:70%;background-image:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);background-size:48px 48px;transform:perspective(480px) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(to top,#000,transparent 80%);mask-image:linear-gradient(to top,#000,transparent 80%);animation:grid 5s linear infinite}
+.cta-sec .wrap{position:relative}
+.cta-sec h2 em{background:none;-webkit-text-fill-color:#BAE6FD}
+.cta-sec p{color:rgba(255,255,255,.82)}
+.cta-sec .btn{background:#fff;color:#1D4ED8;box-shadow:0 18px 34px -14px rgba(0,0,0,.45)}
+footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),transparent 70%),var(--navy)}
+
+@media (max-width:900px){
+  .top .bar nav{background:#fff;border-bottom:1px solid rgba(37,99,235,.14)}
+  .top .bar nav a{border-bottom:1px solid rgba(37,99,235,.1);color:var(--ink)}
+  .top .bar nav a.cta-n{color:#fff;border:0}
+}
+@media (max-width:640px){
+  .stage{padding:10px}.c1{right:0}.c2{left:0}.chip{font-size:12px;padding:8px 12px}
+  .cmp .r>div,.cmp .r>div+div{padding:16px 20px 4px}
+  .cmp .r>div+div{padding:4px 20px 18px;border-left:0}
+  .cta-sec{border-radius:26px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .tilt{transform:none}.rec .chart path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body id="top">
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#home" data-nav="home" aria-label="BuildTrail home">
+      <svg width="36" height="36" viewBox="0 0 96 96" aria-hidden="true"><defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0B1E5B"/></linearGradient></defs><rect width="96" height="96" rx="22" fill="url(#mk)"/><path d="M32 72V24H49a12 12 0 0 1 0 24H54a12 12 0 0 1 0 24H32M32 48H49" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="24" r="6.5" fill="#fff"/><circle cx="32" cy="24" r="2.6" fill="#1E3A8A"/><circle cx="32" cy="48" r="6.5" fill="#fff"/><circle cx="32" cy="48" r="2.6" fill="#1E3A8A"/><circle cx="32" cy="72" r="6.5" fill="#fff"/><circle cx="32" cy="72" r="2.6" fill="#1E3A8A"/><circle cx="66" cy="60" r="8" fill="#38BDF8" stroke="#0B1530" stroke-width="3"/><path d="M62.4 60.2l2.6 2.6 4.6-5.2" fill="none" stroke="#0B1530" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="wm">Build<span>Trail</span></span>
+    </a>
+    <nav id="nav" aria-label="Primary">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#about" data-nav="about">About us</a>
+      <a href="#contact" data-nav="contact">Contact us</a>
+      <a href="#join" data-nav="join" class="cta-n">Join waitlist</a>
+    </nav>
+    <button class="mb" id="mb" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HOME -->
+<div id="v-home">
+  <div class="heroBg" aria-hidden="true"><i></i><i></i><i></i></div>
+  <section class="wrap hero">
+    <div>
+      <p class="eyebrow">The project workspace for student builders</p>
+      <h1>From idea to <em class="blk">verified fix.</em></h1>
+      <p class="lede">Roadmaps, bug records, retest proof and guide-ready reports — one workspace, from your first idea to your final viva.</p>
+      <div class="cta"><a class="btn" href="#join" data-nav="join">Join the waitlist</a><a class="lnk" href="#about" data-nav="about">How BuildTrail works</a></div>
+      <p class="status"><i></i>Launching soon · Join the waitlist for early access</p>
+    </div>
+    <div class="stage"><div class="tilt">
+    <aside class="rec" aria-label="Example of a ReproLab issue record">
+      <div class="row"><span class="id">ISSUE #014</span><span class="ver"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#0B1530" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span></div>
+      <h3>Sensor reading drifts after 10 minutes</h3>
+      <dl><div><dt>Code version</dt><dd>a3f9c21</dd></div><div><dt>Evidence</dt><dd>2 photos · 1 log</dd></div><div><dt>Retest</dt><dd class="g">3 of 3 runs stable</dd></div></dl>
+      <svg class="chart" viewBox="0 0 400 112" role="img" aria-label="Sensor readings: rising before the fix, flat after the fix"><path d="M20 84L56 78L92 68L128 56L164 40" fill="none" stroke="#F08A74" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line x1="200" y1="18" x2="200" y2="92" stroke="#fff" stroke-opacity=".35" stroke-dasharray="3 5"/><path d="M236 66L270 68L304 64L338 67L376 65" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="20" y="104" font-family="Poppins,sans-serif" font-size="10" letter-spacing="1.6" fill="#A3AEC4">BEFORE</text><text x="236" y="104" font-family="Poppins,sans-serif" font-size="10" letter-spacing="1.6" fill="#A3AEC4">AFTER FIX</text></svg>
+    <p class="excap">EXAMPLE RECORD · FOR ILLUSTRATION</p>
+    </aside>
+    <span class="chip c1" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Verified fix</span><span class="chip c2" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Smart Roadmap</span><span class="chip c3" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Guide-ready report</span>
+    </div></div>
+  </section>
+
+  <div class="mq" aria-hidden="true"><div><span>Smart Roadmap</span><span>ReproLab</span><span>Verified Fixes</span><span>PDF Reports</span><span>Bug records</span><span>Retest proof</span><span>Guide-ready reports</span><span>Smart Roadmap</span><span>ReproLab</span><span>Verified Fixes</span><span>PDF Reports</span><span>Bug records</span><span>Retest proof</span><span>Guide-ready reports</span></div></div>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">Why BuildTrail</p>
+      <h2>The bug is rarely the real problem. <em>Lost context</em> is.</h2>
+      <p class="lede" style="margin-bottom:0">Most project trouble comes from what nobody wrote down: how a failure happened, what was tried, and whether the fix really held.</p>
+      <div class="cmp">
+        <div class="r h"><div>Without BuildTrail</div><div>With BuildTrail</div></div>
+        <div class="r"><div>Bugs live in WhatsApp chats, notebooks and memory.</div><div>Every issue is recorded with steps, logs, code version and photos.</div></div>
+        <div class="r"><div>A fix is marked “done” with nothing to show for it.</div><div>A fix becomes Verified only after a retest, with evidence attached.</div></div>
+        <div class="r"><div>Guides see the finished demo, never the journey.</div><div>Guides open one clean report with the full history.</div></div>
+        <div class="r"><div>The final report is written in the last week, from memory.</div><div>The report is built from what you recorded along the way.</div></div>
+        <div class="r"><div>New teammates ask the same questions again and again.</div><div>The timeline answers them: what broke, what was tried, what worked.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="sticky">
+        <p class="eyebrow">What we’re building</p>
+        <h2>One workspace. <em>Four</em> things done properly.</h2>
+        <p class="mut" style="max-width:26em">The first release is deliberately small. It follows a project from the first idea to a report your guide can actually trust.</p>
+      </div>
+      <div>
+        <ol class="list">
+          <li><span class="n">01</span><div><h3>Smart Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a week-by-week plan you can edit.</p></div></li>
+          <li><span class="n">02</span><div><h3>ReproLab</h3><p>Log every bug or hardware failure with steps to reproduce, error logs, code versions, circuit photos and test readings in one place.</p></div></li>
+          <li><span class="n">03</span><div><h3>Verified Fixes<span class="tag">The proof step</span></h3><p>Record the retest result and its evidence, so “fixed” means something you can show.</p></div></li>
+          <li><span class="n">04</span><div><h3>PDF Reports</h3><p>One click gives your guide and teammates a clean report with the full history, without re-explaining anything.</p></div></li>
+        </ol>
+        <p class="later"><span class="k">NEXT UP</span>Team Workspace · Viva Prep · Portfolio Builder</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Five steps, <em>one trail.</em></h2>
+      <ol class="flow">
+        <li><span class="k">01 · PLAN</span><h3>Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a weekly plan.</p></li>
+        <li><span class="k">02 · LOG</span><h3>Record</h3><p>Capture each failure with steps, logs, code version and photos.</p></li>
+        <li><span class="k">03 · FIX</span><h3>Track</h3><p>Move every issue from Open to Fixed with a timeline of attempts.</p></li>
+        <li><span class="k">04 · VERIFY</span><h3>Prove</h3><p>Retest, attach the evidence, and mark the issue Verified.</p></li>
+        <li><span class="k">05 · SHARE</span><h3>Report</h3><p>Send guides and teammates one clean, shareable PDF.</p></li>
+      </ol>
+      <a class="more" href="#about" data-nav="about">Read the full story →</a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">Who it’s for</p>
+      <h2>Built for the people <em>around a project.</em></h2>
+      <div class="cols">
+        <div><span class="k">STUDENT TEAMS</span><h3>Project teams</h3><p>Software, embedded and hardware projects: Arduino, ESP32, IoT, robotics and more.</p></div>
+        <div><span class="k">GUIDES AND FACULTY</span><h3>Project guides</h3><p>See progress and verified fixes in a clean read-only report, without chasing updates.</p></div>
+        <div><span class="k">COLLEGES</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="sticky"><p class="eyebrow">FAQ</p><h2>Questions, <em>answered.</em></h2></div>
+      <div class="faq">
+        <details><summary>What is BuildTrail?</summary><p>A web platform where engineering students and project teams record software bugs and hardware failures, how to reproduce them, and the retest evidence once they’re fixed, then share everything as a report.</p></details>
+        <details><summary>Who is it for?</summary><p>Student project teams, on software and hardware projects. Project guides use the reports, and colleges and departments can follow their teams’ progress.</p></details>
+        <details><summary>Does it work for hardware projects?</summary><p>Yes. ReproLab is designed for circuit photos, test readings and error logs alongside code versions, for projects like Arduino, ESP32, IoT and robotics.</p></details>
+        <details><summary>Is it free?</summary><p>Pricing isn’t final. We plan to offer a free tier for students and will share the details before the public launch.</p></details>
+        <details><summary>When does it launch?</summary><p>We don’t have a public date yet. People on the waitlist hear first.</p></details>
+        <details><summary>How will you use my details?</summary><p>Only to contact you about BuildTrail updates and early access.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-sec">
+    <div class="wrap">
+      <h2><em>Launching</em> soon.</h2>
+      <div><p>Join the waitlist to hear first when BuildTrail opens, and help shape what we build next.</p><a class="btn" href="#join" data-nav="join">Join the waitlist</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div id="v-about" hidden>
+  <section class="wrap pg">
+    <p class="eyebrow">About us</p>
+    <h1>The trail behind <em class="blk">every project.</em></h1>
+    <p class="lede">BuildTrail is a web platform that helps engineering students and project teams record, understand and resolve their software bugs and hardware failures, and prove that the fix worked.</p>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="sticky"><p class="eyebrow">Why we exist</p><h2>Projects fail in <em>the gaps.</em></h2></div>
+      <div>
+        <p>In most student projects, the story of a bug lives in a WhatsApp chat, a notebook page or someone’s memory. A fix gets marked “done”, but nobody can show how it was tested. Guides see the finished demo, not the journey. And the final report gets written in the last week, from memory.</p>
+        <p>BuildTrail keeps the trail. Every problem is recorded with the steps to reproduce it, the error logs, the code version and the photos or readings that explain it. When it’s fixed, the retest and its evidence are recorded too, so anyone can understand what happened without asking the team to explain it again.</p>
+        <p class="mut">Our aim is simple: make debugging more organised, collaborative and repeatable, cut the information lost along the way, and make the path from spotting a failure to verifying its fix easy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>From first idea to <em>final report.</em></h2>
+      <ol class="trail">
+        <li><span class="k">01 · PLAN</span><h3>Start with a roadmap</h3><p>Create a project and describe your idea. Smart Roadmap suggests milestones, a tech stack and a week-wise plan that you can edit.</p></li>
+        <li><span class="k">02 · LOG</span><h3>Record every failure in ReproLab</h3><p>Capture the steps to reproduce, expected and actual behaviour, error logs, the code version, screenshots, circuit photos and test readings.</p></li>
+        <li><span class="k">03 · FIX</span><h3>Track the fix</h3><p>Each issue moves through Open, In Progress, Fixed and Verified, with a full timeline of what the team tried.</p></li>
+        <li><span class="k">04 · VERIFY</span><h3>Prove it with a retest</h3><p>Record the retest result and attach the supporting evidence. Only then does an issue become Verified.</p></li>
+        <li class="end"><span class="k">05 · SHARE</span><h3>Hand over a report</h3><p>Generate a shareable report or PDF so teammates and project guides get the full context in one go.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">Who it’s for</p>
+      <h2>Built for the people <em>around a project.</em></h2>
+      <div class="cols">
+        <div><span class="k">STUDENT TEAMS</span><h3>Final-year and project teams</h3><p>Software, embedded and hardware projects (Arduino, ESP32, IoT, robotics) that need to keep track of what broke and how it was fixed.</p></div>
+        <div><span class="k">GUIDES AND FACULTY</span><h3>Project guides</h3><p>See a team’s progress and its verified fixes through a clean read-only report, without having to ask for updates.</p></div>
+        <div><span class="k">COLLEGES · LATER</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">For students</p>
+      <h2>How BuildTrail <em>helps you.</em></h2>
+      <p class="lede" style="margin-bottom:0">Less scrambling, fewer repeated mistakes, and a project you can explain with confidence.</p>
+      <div class="ben">
+        <div><span class="k">01</span><h3>Never lose a bug’s story</h3><p>Steps, logs, code version, photos and readings for every failure live in one place, so you can return to a problem days later without starting over.</p></div>
+        <div><span class="k">02</span><h3>Know where to start</h3><p>Smart Roadmap turns your idea into milestones, a tech stack and a week-by-week plan, so you stop guessing what to build first.</p></div>
+        <div><span class="k">03</span><h3>Stop fixing the same bug twice</h3><p>Each issue keeps its history, showing what was tried and what finally worked, for you and for your teammates.</p></div>
+        <div><span class="k">04</span><h3>Show proof, not just a demo</h3><p>Retest results and evidence turn “it works” into something your guide can actually see and trust.</p></div>
+        <div><span class="k">05</span><h3>Stay in sync with your team</h3><p>Everyone sees the same status and timeline, so nobody asks “who fixed that?” or “did we test it?” again.</p></div>
+        <div><span class="k">06</span><h3>Finish without the last-week panic</h3><p>Because everything is recorded as you go, your report and your viva answers are already there. One click gives you a PDF.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" id="founder" hidden>
+    <div class="wrap split">
+      <div class="sticky"><p class="eyebrow">Who’s building this</p><h2>The person behind <em>BuildTrail.</em></h2></div>
+      <div><p id="founder-note" style="font-size:19px"></p><p class="sig" id="founder-sig"></p></div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div id="v-contact" hidden>
+  <section class="wrap pg">
+    <div class="split">
+      <div>
+        <p class="eyebrow">Contact us</p>
+        <h1>Let’s talk <em class="blk">about your project.</em></h1>
+        <p class="lede">Running a project team, guiding students or part of a college? We’d like to hear how you handle debugging today.</p>
+        <ul class="reach" id="reach" aria-label="Ways to reach us"></ul>
+        <p class="note">WhatsApp opens a chat with a short message already filled in.</p>
+      </div>
+      <div class="formcard">
+        <form id="f-contact" novalidate>
+          <div class="fg">
+            <div><label for="c-name">Full name <i>*</i></label><input id="c-name" name="name" autocomplete="name" required></div>
+            <div><label for="c-email">Email <i>*</i></label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="full"><label for="c-topic">I’m writing about <i>*</i></label><select id="c-topic" name="topic" required><option value="">Choose one</option><option>Pilot with my team</option><option>Using BuildTrail in my college</option><option>Feedback or an idea</option><option>Partnership</option><option>Something else</option></select></div>
+            <div class="full"><label for="c-msg">Message <i>*</i></label><textarea id="c-msg" name="message" required></textarea></div>
+            <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          </div>
+          <p class="stat" role="status" aria-live="polite"></p>
+          <button class="btn" type="submit">Send message</button>
+        </form>
+        <div class="thanks" hidden><div class="tk"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#0B1530" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Message sent.</h3><p class="mut">Thanks for writing. We’ll get back to you soon.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- JOIN -->
+<div id="v-join" hidden>
+  <section class="wrap pg">
+    <div class="split">
+      <div>
+        <p class="eyebrow">Join the waitlist</p>
+        <h1>Be first <em class="blk">on the trail.</em></h1>
+        <p class="lede">Tell us a little about yourself. We’ll contact you when BuildTrail opens, and invite some of you to try it early.</p>
+        <ul class="perks">
+          <li><b>Early access</b>Be among the first to use BuildTrail before the public launch.</li>
+          <li><b>A say in what we build</b>Early members help decide which features come first.</li>
+          <li><b>Pilot invitations</b>Teams on the waitlist are the first we invite to try it.</li>
+        </ul>
+        <p class="note">You only fill this in once. We use these details only to contact you about BuildTrail.</p>
+      </div>
+      <div class="formcard">
+        <!-- STEP 1: WAITLIST FORM -->
+        <form id="f-join" novalidate>
+          <div class="fg">
+            <div class="full"><label for="j-name">Full name <i>*</i></label><input id="j-name" name="name" autocomplete="name" required></div>
+            <div><label for="j-phone">Phone / WhatsApp <i>*</i></label><input id="j-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number" required></div>
+            <div><label for="j-email">Email <i>*</i></label><input id="j-email" name="email" type="email" autocomplete="email" required></div>
+            <div><label for="j-role">I am a <i>*</i></label><select id="j-role" name="role" required><option value="">Choose one</option><option>Student</option><option>Project guide or faculty</option><option>Freelance developer</option><option>Something else</option></select></div>
+            <div><label for="j-stream">Stream or branch <i>*</i></label><input id="j-stream" name="stream" list="streams" placeholder="e.g. Computer Science" required><datalist id="streams"><option value="Computer Science / IT"><option value="Electronics and Communication"><option value="Electrical"><option value="Mechanical"><option value="Civil"><option value="Mining"><option value="BCA / MCA"><option value="Other"></datalist></div>
+            <div><label for="j-year">Academic year <i>*</i></label><select id="j-year" name="year" required><option value="">Choose one</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>Postgraduate</option><option>Recently graduated</option><option>Not a student</option></select></div>
+            <div><label for="j-uni">University or college <i>*</i></label><input id="j-uni" name="university" autocomplete="organization" required></div>
+            <div class="full"><label for="j-type">What do you build?</label><select id="j-type" name="projectType"><option value="">Choose one</option><option>Software</option><option>Hardware or embedded</option><option>Both</option><option>Not sure yet</option></select></div>
+            <div class="full"><label for="j-pain">Your biggest debugging headache <span class="mut">(optional)</span></label><textarea id="j-pain" name="pain"></textarea></div>
+            <div class="full"><label class="chk"><input type="checkbox" name="consent" required><span>I agree to be contacted about BuildTrail updates and early access, and to the <a href="#privacy" target="_blank" rel="noopener">Privacy Policy</a>. <i>*</i></span></label></div>
+            <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          </div>
+          <p class="stat" role="status" aria-live="polite"></p>
+          <button class="btn" type="submit">Send WhatsApp OTP</button>
+        </form>
+
+        <!-- STEP 2: WHATSAPP OTP VERIFICATION -->
+        <div id="otp-step" class="otp-box" hidden>
+          <span class="badge">WhatsApp Verification</span>
+          <h3>Enter 6-digit OTP</h3>
+          <p class="mut" style="margin-bottom:14px">We’ve sent a 6-digit verification code to your WhatsApp number <b id="otp-phone-display"></b>. It can take a minute to arrive.</p>
+          <div>
+            <label for="j-otp">Verification Code <i>*</i></label>
+            <input id="j-otp" class="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+          </div>
+          <p id="otp-stat" class="stat" role="status" aria-live="polite"></p>
+          <div class="otp-actions">
+            <button id="btn-verify-otp" class="btn" type="button">Verify & Join Waitlist</button>
+            <button id="btn-resend" class="btn sec-btn" type="button" disabled>Resend code</button>
+            <button id="btn-edit-phone" class="btn sec-btn" type="button">Change Number</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: THANKS MESSAGE -->
+        <div class="thanks" id="join-thanks" hidden>
+          <div class="tk"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#0B1530" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 id="thx-title">You’re on the list.</h3>
+          <p class="mut">We’ll share early access and launch updates with you soon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRIVACY -->
+<div id="v-privacy" hidden>
+  <section class="wrap pg prose">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy <em class="blk">Policy.</em></h1>
+    <p class="upd">Last updated: November 2026</p>
+    <p>BuildTrail is a project workspace for student builders that is currently being built. This page explains what personal information we collect through this website, why, and the choices you have.</p>
+    <h2>What we collect</h2>
+    <ul>
+      <li><b>Waitlist:</b> your name, phone (WhatsApp) number, email, role, stream or branch, academic year, university or college, the kind of projects you build, and anything optional you choose to tell us about your debugging challenges.</li>
+      <li><b>Contact form:</b> your name, email, the topic you pick and your message.</li>
+      <li><b>Verification:</b> we send a one-time code to your WhatsApp number to confirm that it is yours.</li>
+    </ul>
+    <h2>Why we use it</h2>
+    <ul>
+      <li>To verify your number and add you to the waitlist.</li>
+      <li>To contact you about early access, launch updates and BuildTrail.</li>
+      <li>To understand who we are building for, so we can decide what to build first.</li>
+      <li>To reply to your messages.</li>
+    </ul>
+    <p>We rely on your consent, which you give when you tick the box on the waitlist form. You can withdraw it at any time.</p>
+    <h2>Who we share it with</h2>
+    <p>We do not sell your information. We use service providers to run the site, deliver messages and store data (for example, hosting, messaging and database providers). They may process your information only to provide those services to us.</p>
+    <h2>How long we keep it</h2>
+    <p>We keep your details only for as long as we need them for the purposes above, or until you ask us to delete them.</p>
+    <h2>Your choices</h2>
+    <p>You can ask us to show you what we hold about you, correct it, delete it, or stop contacting you. Write to us at <span class="pv-contact"></span> and we will respond.</p>
+    <h2>Security</h2>
+    <p>We take reasonable steps to protect your information, but no online service can promise absolute security.</p>
+    <h2>Age</h2>
+    <p>BuildTrail is meant for college students, educators and professionals. Please do not submit the waitlist form if you are under 18.</p>
+    <h2>Changes to this policy</h2>
+    <p>If we change this policy, we will update this page and the date above.</p>
+  </section>
+</div>
+
+<!-- TERMS -->
+<div id="v-terms" hidden>
+  <section class="wrap pg prose">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of <em class="blk">use.</em></h1>
+    <p class="upd">Last updated: November 2026</p>
+    <p>By using this website you agree to these terms. If you do not agree, please do not use it.</p>
+    <h2>About this website</h2>
+    <p>BuildTrail is in development. The features described on this site show what we are building and may change before launch. Joining the waitlist does not guarantee access to the product or any particular launch date.</p>
+    <h2>Using the site</h2>
+    <ul>
+      <li>Give accurate information when you join the waitlist or contact us, and use only your own phone number.</li>
+      <li>Do not misuse the site, try to break or overload it, or submit anything unlawful or harmful.</li>
+    </ul>
+    <h2>Our content</h2>
+    <p>The BuildTrail name, logo, design and text on this site belong to BuildTrail. Please do not copy or reuse them without our permission.</p>
+    <h2>No warranty</h2>
+    <p>This website is provided “as is”. We do our best to keep it accurate and available, but we cannot promise it will always be error-free or uninterrupted, and we are not liable for losses that result from using it, to the extent the law allows.</p>
+    <h2>Privacy</h2>
+    <p>How we handle your personal information is described in our <a href="#privacy" data-nav="privacy">Privacy Policy</a>.</p>
+    <h2>Contact</h2>
+    <p>Questions about these terms? Write to us at <span class="pv-contact"></span>.</p>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="#home" data-nav="home"><svg width="36" height="36" viewBox="0 0 96 96" aria-hidden="true"><defs><linearGradient id="mk2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0B1E5B"/></linearGradient></defs><rect width="96" height="96" rx="22" fill="url(#mk2)"/><path d="M32 72V24H49a12 12 0 0 1 0 24H54a12 12 0 0 1 0 24H32M32 48H49" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="24" r="6.5" fill="#fff"/><circle cx="32" cy="24" r="2.6" fill="#1E3A8A"/><circle cx="32" cy="48" r="6.5" fill="#fff"/><circle cx="32" cy="48" r="2.6" fill="#1E3A8A"/><circle cx="32" cy="72" r="6.5" fill="#fff"/><circle cx="32" cy="72" r="2.6" fill="#1E3A8A"/><circle cx="66" cy="60" r="8" fill="#38BDF8" stroke="#0B1530" stroke-width="3"/><path d="M62.4 60.2l2.6 2.6 4.6-5.2" fill="none" stroke="#0B1530" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="wm">Build<span>Trail</span></span></a>
+        <p class="blurb">The project workspace for student builders. Record, understand and verify every fix, from first idea to final report.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="#home" data-nav="home">Home</a></li><li><a href="#about" data-nav="about">About us</a></li><li><a href="#contact" data-nav="contact">Contact us</a></li><li><a href="#join" data-nav="join">Join waitlist</a></li></ul></div>
+      <div><h4>Product</h4><ul><li>Smart Roadmap<small>Soon</small></li><li>ReproLab<small>Soon</small></li><li>Verified Fixes<small>Soon</small></li><li>PDF Reports<small>Soon</small></li></ul></div>
+      <div><h4>Connect</h4><ul id="f-connect"><li><a href="#join" data-nav="join">Get launch updates</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 BuildTrail. All rights reserved.</span><span class="lk"><a href="#privacy" data-nav="privacy">Privacy</a><a href="#terms" data-nav="terms">Terms</a></span><b>BUILD. TRACK. PROVE.</b></div>
+  </div>
+</footer>
+
+<script>
+  var CONFIG = {
+    // Backend address. On your computer it uses the local server automatically.
+    // For the live site, paste your deployed backend URL (https) into PROD_API.
+    API_BASE: (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:")
+      ? "http://localhost:5000"
+      : "",            // e.g. "https://api.yourdomain.in"
+    WHATSAPP: "",      // number with country code, digits only, e.g. 919876543210
+    EMAIL: "",         // e.g. hello@yourdomain.in (also shown in the Privacy Policy and Terms)
+    LINKEDIN: "",      // e.g. https://www.linkedin.com/in/yourname
+    GITHUB: "",        // e.g. https://github.com/yourname
+    INSTAGRAM: "",     // e.g. https://www.instagram.com/yourhandle
+    // Optional founder note on the About page. It only shows when all three are filled.
+    FOUNDER_NAME: "",  // e.g. "Your Name"
+    FOUNDER_ROLE: "",  // e.g. "Founder, BuildTrail · BCA student, Jodhpur"
+    FOUNDER_NOTE: ""   // 2-3 sentences: why you are building BuildTrail
+  };
+
+  var VIEWS = ["home", "about", "contact", "join", "privacy", "terms"];
+  var TITLES = { home: "BuildTrail — Launching soon", about: "About us — BuildTrail", contact: "Contact us — BuildTrail", join: "Join the waitlist — BuildTrail", privacy: "Privacy Policy — BuildTrail", terms: "Terms of use — BuildTrail" };
+  var nav = document.getElementById("nav"), mb = document.getElementById("mb");
+
+  function show(v) {
+    if (VIEWS.indexOf(v) < 0) v = "home";
+    VIEWS.forEach(function (n) { document.getElementById("v-" + n).hidden = n !== v; });
+    document.querySelectorAll("#nav a").forEach(function (a) {
+      if (a.getAttribute("data-nav") === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    document.title = TITLES[v];
+    nav.classList.remove("open"); mb.setAttribute("aria-expanded", "false");
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-nav]");
+    if (!a) return;
+    e.preventDefault();
+    var v = a.getAttribute("data-nav");
+    show(v);
+    try { history.replaceState(null, "", "#" + v); } catch (err) {}
+  });
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+  mb.addEventListener("click", function () {
+    var open = nav.classList.toggle("open"); mb.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  show(location.hash.slice(1));
+
+  // ---- Contact channels ----
+  (function () {
+    function strip(u) { return u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""); }
+    var channels = [
+      { k: "WhatsApp", v: CONFIG.WHATSAPP, href: function (v) { return "https://wa.me/" + v.replace(/\D/g, "") + "?text=" + encodeURIComponent("Hi BuildTrail team, I’d like to know more."); }, text: function () { return "Chat with us"; } },
+      { k: "Email", v: CONFIG.EMAIL, href: function (v) { return "mailto:" + v; }, text: function (v) { return v; } },
+      { k: "LinkedIn", v: CONFIG.LINKEDIN, href: function (v) { return v; }, text: strip },
+      { k: "GitHub", v: CONFIG.GITHUB, href: function (v) { return v; }, text: strip },
+      { k: "Instagram", v: CONFIG.INSTAGRAM, href: function (v) { return v; }, text: strip }
+    ];
+    var reach = document.getElementById("reach"), fc = document.getElementById("f-connect");
+    function cell(tag, cls, txt) { var e = document.createElement(tag); e.className = cls; e.textContent = txt; return e; }
+    channels.forEach(function (c) {
+      var li = document.createElement("li");
+      if (c.v) {
+        var a = document.createElement("a"), h = c.href(c.v);
+        a.href = h; if (h.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
+        a.appendChild(cell("span", "k", c.k.toUpperCase())); a.appendChild(cell("span", "v", c.text(c.v))); a.appendChild(cell("span", "ar", "↗"));
+        li.appendChild(a);
+        var fl = document.createElement("li"), fa = document.createElement("a");
+        fa.href = h; fa.textContent = c.k; if (h.indexOf("http") === 0) { fa.target = "_blank"; fa.rel = "noopener"; }
+        fl.appendChild(fa); fc.appendChild(fl);
+      } else {
+        var d = document.createElement("div"); d.className = "off";
+        d.appendChild(cell("span", "k", c.k.toUpperCase())); d.appendChild(cell("span", "v", "Link coming soon")); d.appendChild(cell("span", "ar", ""));
+        li.appendChild(d);
+      }
+      reach.appendChild(li);
+    });
+  })();
+
+  // ---- Validation Helpers ----
+  var RULES = {
+    phone: function (v) { var d = v.replace(/[\s-]/g, ""); return /^(\+?91)?[6-9]\d{9}$/.test(d) ? "" : "Enter a valid 10-digit mobile number."; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter a valid email address."; }
+  };
+  function formatWhatsAppNumber(raw) {
+    var digits = raw.replace(/\D/g, "");
+    if (digits.length === 10) return "91" + digits;
+    return digits;
+  }
+  function setErr(el, msg) {
+    var box = el.type === "checkbox" ? el.closest("label").parentNode : el.parentNode;
+    var old = box.querySelector(".err"); if (old) old.remove();
+    if (msg) {
+      var s = document.createElement("span"); s.className = "err"; s.textContent = msg; box.appendChild(s);
+      el.setAttribute("aria-invalid", "true");
+    } else el.removeAttribute("aria-invalid");
+  }
+  function check(el) {
+    var v = el.type === "checkbox" ? (el.checked ? "x" : "") : el.value.trim(), msg = "";
+    if (el.required && !v) msg = el.type === "checkbox" ? "Please tick this to continue." : "This field is required.";
+    else if (v && RULES[el.name]) msg = RULES[el.name](v);
+    setErr(el, msg);
+    return !msg;
+  }
+
+  // ---- Founder note and policy contact ----
+  (function () {
+    if (CONFIG.FOUNDER_NAME && CONFIG.FOUNDER_ROLE && CONFIG.FOUNDER_NOTE) {
+      document.getElementById("founder").hidden = false;
+      document.getElementById("founder-note").textContent = CONFIG.FOUNDER_NOTE;
+      document.getElementById("founder-sig").textContent = CONFIG.FOUNDER_NAME + " — " + CONFIG.FOUNDER_ROLE;
+    }
+    document.querySelectorAll(".pv-contact").forEach(function (e) {
+      var a = document.createElement("a");
+      if (CONFIG.EMAIL) { a.href = "mailto:" + CONFIG.EMAIL; a.textContent = CONFIG.EMAIL; }
+      else { a.href = "#contact"; a.setAttribute("data-nav", "contact"); a.textContent = "the Contact page"; }
+      e.appendChild(a);
+    });
+  })();
+
+  // ---- Input length limits ----
+  (function () {
+    var LIM = { name: 80, phone: 20, email: 120, stream: 80, university: 120, pain: 600, message: 1500 };
+    Object.keys(LIM).forEach(function (n) {
+      document.querySelectorAll('[name="' + n + '"]').forEach(function (el) { if (el.tagName !== "SELECT") el.maxLength = LIM[n]; });
+    });
+  })();
+
+  // ---- API helper: friendly errors, never raw technical messages ----
+  function api(path, payload) {
+    if (!CONFIG.API_BASE) return Promise.reject(new Error("Sign-ups aren’t open just yet. Please check back soon."));
+    return fetch(CONFIG.API_BASE + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          if (!res.ok) throw new Error(body.error || "Something went wrong. Please try again.");
+          return body;
+        });
+      }, function () { throw new Error("We couldn’t reach our server. Please try again in a few minutes."); });
+  }
+
+  // ---- Waitlist form with WhatsApp OTP ----
+  (function () {
+    var form = document.getElementById("f-join"), stat = form.querySelector(".stat"), btn = form.querySelector("button[type=submit]");
+    var otpStep = document.getElementById("otp-step"), otpInput = document.getElementById("j-otp"), otpStat = document.getElementById("otp-stat");
+    var otpPhone = document.getElementById("otp-phone-display"), btnVerify = document.getElementById("btn-verify-otp");
+    var btnEdit = document.getElementById("btn-edit-phone"), btnResend = document.getElementById("btn-resend"), thanks = document.getElementById("join-thanks");
+    var pending = null, timer = null;
+
+    function cooldown(sec) {
+      clearInterval(timer); var left = sec; btnResend.disabled = true; btnResend.textContent = "Resend code in " + left + "s";
+      timer = setInterval(function () {
+        left--;
+        if (left <= 0) { clearInterval(timer); btnResend.disabled = false; btnResend.textContent = "Resend code"; }
+        else btnResend.textContent = "Resend code in " + left + "s";
+      }, 1000);
+    }
+    function sendOtp() { return api("/api/send-otp", { name: pending.name, phone: pending.formattedPhone }); }
+
+    form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid")) check(e.target); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      stat.textContent = ""; stat.className = "stat";
+      var bad = null;
+      form.querySelectorAll("input,select,textarea").forEach(function (el) { if (el.name !== "website" && !check(el) && !bad) bad = el; });
+      if (bad) { bad.focus(); return; }
+      var data = { type: "waitlist", submittedAt: new Date().toISOString() };
+      new FormData(form).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
+      if (data.website) { form.hidden = true; thanks.hidden = false; return; }
+      delete data.website; data.consent = true;
+      data.formattedPhone = formatWhatsAppNumber(data.phone);
+      pending = data;
+      btn.disabled = true; stat.textContent = "Sending the code to your WhatsApp…";
+      sendOtp().then(function () {
+        form.hidden = true; otpStep.hidden = false;
+        otpPhone.textContent = "+" + data.formattedPhone;
+        otpInput.value = ""; otpStat.textContent = ""; otpStat.className = "stat";
+        cooldown(30); otpInput.focus();
+      }).catch(function (err) {
+        stat.className = "stat bad"; stat.textContent = err.message;
+      }).then(function () { btn.disabled = false; });
+    });
+
+    otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 6); });
+    otpInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); btnVerify.click(); } });
+
+    btnVerify.addEventListener("click", function () {
+      var code = otpInput.value.trim();
+      otpStat.className = "stat"; otpStat.textContent = "";
+      if (!/^\d{6}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the 6-digit code."; otpInput.focus(); return; }
+      btnVerify.disabled = true; otpStat.textContent = "Verifying…";
+      api("/api/verify-otp", { phone: pending.formattedPhone, otp: code, userData: pending }).then(function () {
+        clearInterval(timer); otpStep.hidden = true; thanks.hidden = false;
+        document.getElementById("thx-title").textContent = "You’re on the list, " + pending.name.split(" ")[0] + ".";
+        pending = null;
+      }).catch(function (err) {
+        otpStat.className = "stat bad"; otpStat.textContent = err.message;
+      }).then(function () { btnVerify.disabled = false; });
+    });
+
+    btnResend.addEventListener("click", function () {
+      if (!pending) return;
+      btnResend.disabled = true; otpStat.className = "stat"; otpStat.textContent = "Sending a new code…";
+      sendOtp().then(function () { otpStat.textContent = "A new code has been sent."; otpInput.value = ""; otpInput.focus(); cooldown(30); })
+        .catch(function (err) { otpStat.className = "stat bad"; otpStat.textContent = err.message; btnResend.disabled = false; btnResend.textContent = "Resend code"; });
+    });
+
+    btnEdit.addEventListener("click", function () {
+      clearInterval(timer); otpStep.hidden = true; form.hidden = false; stat.textContent = "";
+      document.getElementById("j-phone").focus();
+    });
+  })();
+
+  // ---- Contact form ----
+  (function () {
+    var form = document.getElementById("f-contact"), stat = form.querySelector(".stat"), btn = form.querySelector("button[type=submit]");
+    var thanks = form.parentNode.querySelector(".thanks");
+    form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid")) check(e.target); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      stat.textContent = ""; stat.className = "stat";
+      var bad = null;
+      form.querySelectorAll("input,select,textarea").forEach(function (el) { if (el.name !== "website" && !check(el) && !bad) bad = el; });
+      if (bad) { bad.focus(); return; }
+      var data = { type: "contact", submittedAt: new Date().toISOString() };
+      new FormData(form).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
+      if (data.website) { form.hidden = true; thanks.hidden = false; return; }
+      delete data.website;
+      btn.disabled = true; stat.textContent = "Sending…";
+      api("/api/contact", data).then(function () { form.hidden = true; thanks.hidden = false; })
+        .catch(function (err) { stat.className = "stat bad"; stat.textContent = err.message; })
+        .then(function () { btn.disabled = false; });
+    });
+  })();
+</script>
+<script>
+(function () {
+  var root = document.documentElement; root.classList.add("js");
+  var rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var bar = document.createElement("div"); bar.className = "prog"; document.body.appendChild(bar);
+  function prog() { var h = root.scrollHeight - innerHeight; bar.style.transform = "scaleX(" + (h > 0 ? Math.min(1, scrollY / h) : 0) + ")"; }
+  addEventListener("scroll", prog, { passive: true }); addEventListener("resize", prog); prog();
+  if (rm) return;
+
+  // tactile 3D cards
+  var cards = document.querySelectorAll(".cols>div,.ben>div,.flow li,.list>li");
+  cards.forEach(function (c) { c.classList.add("tcard"); });
+  if (fine) cards.forEach(function (c) {
+    c.addEventListener("pointermove", function (e) {
+      var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.setProperty("--ry", ((x - .5) * 10).toFixed(2) + "deg");
+      c.style.setProperty("--rx", ((.5 - y) * 8).toFixed(2) + "deg");
+      c.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); c.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+    });
+    c.addEventListener("pointerleave", function () { c.style.setProperty("--ry", "0deg"); c.style.setProperty("--rx", "0deg"); });
+  });
+
+  // scroll reveal
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: .12, rootMargin: "0px 0px -6% 0px" });
+    var sel = ".sec .eyebrow,.sec h2,.sec .lede,.cols>div,.ben>div,.flow li,.list>li,.trail li,.faq details,.cmp .r,.perks li,.reach li,.cta-sec .wrap>*,.formcard,.prose>*,.pg .eyebrow,.pg h1,.pg .lede";
+    document.querySelectorAll(sel).forEach(function (el) {
+      var n = 0, s = el; while ((s = s.previousElementSibling)) n++;
+      el.style.setProperty("--d", Math.min(n, 5)); el.classList.add("rv"); io.observe(el);
+    });
+  }
+
+  // hero: pointer-driven 3D tilt, gentle idle drift
+  var t = document.querySelector(".tilt"); if (!t) return;
+  var cx = 0, cy = 0, nx = 0, ny = 0, last = -1e9;
+  if (fine) addEventListener("pointermove", function (e) { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; last = performance.now(); });
+  (function loop(now) {
+    if (t.offsetParent) {
+      var idle = now - last > 2500;
+      var ty = idle ? Math.sin(now / 1800) * 9 - 6 : nx * 24, tx = idle ? Math.cos(now / 2300) * 4 + 4 : -ny * 16;
+      cx += (tx - cx) * .07; cy += (ty - cy) * .07;
+      t.style.setProperty("--rx", cx.toFixed(2) + "deg"); t.style.setProperty("--ry", cy.toFixed(2) + "deg");
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+})();
+</script>
+</body>
+</html>
