@@ -1,4 +1,4 @@
-// BuildTrail backend: WhatsApp OTP waitlist + contact form.
+// BuildTrail backend: Waitlist database & Contact form storage.
 // Run: npm install && npm start   (needs Node 18 or newer, "type": "module" in package.json)
 import express from 'express';
 import cors from 'cors';
@@ -14,15 +14,9 @@ const PORT = Number(process.env.PORT) || 5000;
 const IS_PROD = process.env.NODE_ENV === 'production';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
-const PROVIDER_NAME = (process.env.WA_PROVIDER || 'webjs').toLowerCase(); // webjs | cloud | console
 const DATA_DIR = path.resolve(process.env.DATA_DIR || './data');
-const SEND_WELCOME = (process.env.SEND_WELCOME || 'on') !== 'off';
 
 const MIN = 60 * 1000, HOUR = 60 * MIN;
-const OTP_TTL = 5 * MIN;
-const MAX_ATTEMPTS = 5;                                            // wrong codes allowed per OTP
-const RESEND_GAP = (Number(process.env.OTP_RESEND_GAP_SEC) || 30) * 1000; // minimum gap between codes to one number
-const MAX_SENDS_PER_PHONE_PER_HOUR = 5;
 
 // ---------- Small helpers ----------
 class HttpError extends Error {
@@ -34,11 +28,8 @@ const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch
 const str = (v, max) => (typeof v === 'string' ? v.replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max) : '');
 // multi-line text: keeps line breaks
 const multiline = (v, max) => (typeof v === 'string' ? v.replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, ' ').trim().slice(0, max) : '');
-// name that is safe to put inside a WhatsApp message
-const safeName = v => str(v, 40).replace(/[*_~`]/g, '');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^91[6-9]\d{9}$/;   // Indian mobile numbers, with country code
 const ROLES = ['Student', 'Project guide or faculty', 'Freelance developer', 'Something else'];
 const YEARS = ['1st year', '2nd year', '3rd year', '4th year', 'Postgraduate', 'Recently graduated', 'Not a student'];
 const PROJECT_TYPES = ['Software', 'Hardware or embedded', 'Both', 'Not sure yet'];
@@ -98,89 +89,6 @@ function cleanWaitlist(u, phone) {
   return { value: { ...v, phone, consent: true } };
 }
 
-// ---------- WhatsApp providers ----------
-const otpText = (name, otp) => `Hi ${name}, your BuildTrail verification code is *${otp}*. It is valid for 5 minutes. Please don’t share it with anyone.`;
-const welcomeText = name => `Thanks ${name} for joining the BuildTrail waitlist! We’ll share early access and launch updates here soon.`;
-
-async function makeProvider(name) {
-  if (name === 'console') {                       // development: prints the code instead of sending it
-    return {
-      name, ready: () => true,
-      sendOtp: async ({ phone, otp }) => console.log(`[DEV] OTP for +${phone}: ${otp}`),
-      sendWelcome: async ({ phone }) => console.log(`[DEV] welcome message for +${phone}`)
-    };
-  }
-
-  if (name === 'cloud') {                         // official WhatsApp Business Cloud API (recommended for live use)[cite: 4, 10]
-    const { WA_TOKEN, WA_PHONE_NUMBER_ID, WA_OTP_TEMPLATE, WA_WELCOME_TEMPLATE } = process.env;
-    if (!WA_TOKEN || !WA_PHONE_NUMBER_ID || !WA_OTP_TEMPLATE) throw new Error('WA_PROVIDER=cloud needs WA_TOKEN, WA_PHONE_NUMBER_ID and WA_OTP_TEMPLATE in .env');
-    const lang = process.env.WA_TEMPLATE_LANG || 'en';
-    const version = process.env.WA_GRAPH_VERSION || 'v21.0';   // check Meta's docs for the current version[cite: 4, 10]
-    const call = async (to, template) => {
-      const res = await fetch(`https://graph.facebook.com/${version}/${WA_PHONE_NUMBER_ID}/messages`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${WA_TOKEN}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'template', template })
-      });
-      if (!res.ok) {
-        console.error('WhatsApp Cloud API error', res.status, (await res.text().catch(() => '')).slice(0, 300));
-        throw new HttpError(502, 'We couldn’t send the code right now. Please try again shortly.');
-      }
-    };
-    return {
-      name, ready: () => true,
-      sendOtp: ({ phone, otp }) => {
-        const templateData = {
-          name: WA_OTP_TEMPLATE,
-          language: { code: lang }
-        };
-        if (WA_OTP_TEMPLATE !== 'hello_world') {
-          templateData.components = [
-            { type: 'body', parameters: [{ type: 'text', text: otp }] }
-          ];
-        }
-        return call(phone, templateData);
-      },
-      sendWelcome: async ({ phone, name: n }) => {
-        if (!WA_WELCOME_TEMPLATE) return;
-        await call(phone, { name: WA_WELCOME_TEMPLATE, language: { code: lang }, components: [{ type: 'body', parameters: [{ type: 'text', text: n }] }] });
-      }
-    };
-  }
-
-  // default: whatsapp-web.js (cleaned up for stable execution)
-  console.warn('\n⚠️  WA_PROVIDER=webjs uses an unofficial library and your personal WhatsApp account.');
-  console.warn('    WhatsApp can ban accounts that message many people this way. Fine for local testing,');
-  console.warn('    but move to WA_PROVIDER=cloud (official API) before a public launch.\n');
-  const pkg = (await import('whatsapp-web.js')).default;
-  const qrcode = (await import('qrcode-terminal')).default;
-  
-  const client = new pkg.Client({ 
-    authStrategy: new pkg.LocalAuth(),
-    puppeteer: {
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    }
-  });
-
-  let ready = false;
-  client.on('qr', qr => { console.log('\n📱 Scan this QR code with the WhatsApp account that will send the codes:'); qrcode.generate(qr, { small: true }); });
-  client.on('ready', () => { ready = true; console.log('✅ WhatsApp client is ready.'); });
-  client.on('disconnected', reason => { ready = false; console.warn('WhatsApp client disconnected:', reason); });
-  client.on('auth_failure', msg => console.error('WhatsApp authentication failed:', msg));
-  client.initialize();
-  const send = async (phone, text) => {
-    const id = await client.getNumberId(phone);   // null when the number is not on WhatsApp
-    if (!id) throw new HttpError(400, 'This number doesn’t seem to be on WhatsApp.');
-    await client.sendMessage(id._serialized, text);
-  };
-  return {
-    name, ready: () => ready,
-    sendOtp: ({ phone, name: n, otp }) => send(phone, otpText(n, otp)),
-    sendWelcome: ({ phone, name: n }) => send(phone, welcomeText(n))
-  };
-}
-const provider = await makeProvider(PROVIDER_NAME);
-
 // ---------- App ----------
 const app = express();
 app.disable('x-powered-by');
@@ -195,73 +103,24 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '20kb' }));
 
-const otpStore = new Map(); // phone -> { otp, name, expiresAt, attempts, sentAt }
+app.get('/health', (req, res) => res.json({ ok: true }));
 
-app.get('/health', (req, res) => res.json({ ok: true, provider: provider.name, whatsappReady: provider.ready() }));
-
-// 1. Send OTP
-app.post('/api/send-otp', ipLimit('send', 20, HOUR), wrap(async (req, res) => {
-  if (!provider.ready()) throw new HttpError(503, 'Verification is starting up. Please try again in a minute.');
-  const name = safeName(req.body?.name);
+// 1. Waitlist endpoint (Called after Firebase phone authentication succeeds on frontend)
+app.post('/api/waitlist', ipLimit('waitlist', 10, HOUR), wrap(async (req, res) => {
   const phone = normalizePhone(req.body?.phone);
-  if (!name) throw new HttpError(400, 'Please enter your name.');
-  if (!PHONE_RE.test(phone)) throw new HttpError(400, 'Please enter a valid 10-digit mobile number.');
-  if (onList.has(phone)) throw new HttpError(409, 'This number is already on the waitlist.');
-
-  const now = Date.now(), current = otpStore.get(phone);
-  if (current && now - current.sentAt < RESEND_GAP) {
-    const wait = Math.ceil((RESEND_GAP - (now - current.sentAt)) / 1000);
-    res.set('Retry-After', String(wait));
-    throw new HttpError(429, `Please wait ${wait} seconds before asking for another code.`);
-  }
-  if (hit(`phone:${phone}`, MAX_SENDS_PER_PHONE_PER_HOUR, HOUR)) throw new HttpError(429, 'Too many codes requested for this number. Please try again later.');
-
-  const otp = String(crypto.randomInt(100000, 1000000));
-  try {
-    await provider.sendOtp({ phone, name, otp });
-  } catch (err) {
-    if (err instanceof HttpError) throw err;
-    console.error('Could not send OTP:', err.message);
-    throw new HttpError(502, 'We couldn’t send the code right now. Please try again shortly.');
-  }
-  otpStore.set(phone, { otp, name, expiresAt: now + OTP_TTL, attempts: 0, sentAt: now });
-  res.json({ success: true, message: 'Code sent to your WhatsApp.' });
-}));
-
-// 2. Verify OTP and save the waitlist entry
-app.post('/api/verify-otp', ipLimit('verify', 60, 15 * MIN), wrap(async (req, res) => {
-  const phone = normalizePhone(req.body?.phone);
-  const code = str(req.body?.otp, 6);
-  if (!PHONE_RE.test(phone) || !/^\d{6}$/.test(code)) throw new HttpError(400, 'Please enter the 6-digit code.');
-
-  const clean = cleanWaitlist(req.body?.userData, phone);     // the browser's data is never trusted as it is
+  const clean = cleanWaitlist(req.body, phone);
   if (clean.error) throw new HttpError(400, clean.error);
 
-  const entry = otpStore.get(phone);
-  if (!entry || Date.now() > entry.expiresAt) {
-    otpStore.delete(phone);
-    throw new HttpError(400, 'This code has expired. Please request a new one.');
-  }
-  if (entry.attempts >= MAX_ATTEMPTS) {
-    otpStore.delete(phone);
-    throw new HttpError(429, 'Too many wrong attempts. Please request a new code.');
-  }
-  if (!safeEqual(entry.otp, code)) {
-    entry.attempts += 1;
-    throw new HttpError(400, 'That code isn’t correct. Please check it and try again.');
-  }
-
   if (!onList.has(phone)) {
-    await save(FILES.waitlist, { ...clean.value, verifiedAt: new Date().toISOString() });
-    waitlist.push({ ...clean.value, verifiedAt: new Date().toISOString() });
+    const record = { ...clean.value, verifiedAt: new Date().toISOString() };
+    await save(FILES.waitlist, record);
+    waitlist.push(record);
     onList.add(phone);
-    if (SEND_WELCOME) provider.sendWelcome({ phone, name: safeName(clean.value.name) }).catch(e => console.warn('Welcome message failed:', e.message));
   }
-  otpStore.delete(phone);
   res.json({ success: true, message: 'You’re on the waitlist.' });
 }));
 
-// 3. Contact form
+// 2. Contact form
 app.post('/api/contact', ipLimit('contact', 10, HOUR), wrap(async (req, res) => {
   const b = req.body || {};
   const rec = { name: str(b.name, 80), email: str(b.email, 120).toLowerCase(), topic: str(b.topic, 60), message: multiline(b.message, 1500) };
@@ -274,7 +133,7 @@ app.post('/api/contact', ipLimit('contact', 10, HOUR), wrap(async (req, res) => 
   res.json({ success: true, message: 'Message received.' });
 }));
 
-// 4. Admin (needs ADMIN_TOKEN in .env; send it as:  Authorization: Bearer <token>)
+// 3. Admin (needs ADMIN_TOKEN in .env; send it as:  Authorization: Bearer <token>)
 function requireAdmin(req, res, next) {
   if (!ADMIN_TOKEN) return res.status(404).json({ error: 'Not found' });
   const h = req.get('authorization') || '';
@@ -306,12 +165,11 @@ app.use((err, req, res, next) => {
 // ---------- Housekeeping ----------
 setInterval(() => {
   const now = Date.now();
-  for (const [phone, e] of otpStore) if (now > e.expiresAt) otpStore.delete(phone);
   for (const [key, list] of buckets) if (!list.length || now - list[list.length - 1] > HOUR) buckets.delete(key);
 }, 5 * MIN).unref();
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}  (WhatsApp provider: ${provider.name})`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
   if (IS_PROD && ALLOWED_ORIGINS.length === 0) console.warn('⚠️  ALLOWED_ORIGINS is empty, so browsers on your website will be blocked. Set it in .env.');
   if (!ADMIN_TOKEN) console.log('ℹ️  Admin routes are off. Set ADMIN_TOKEN in .env to read the waitlist.');
 });
