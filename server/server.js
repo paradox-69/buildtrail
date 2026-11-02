@@ -111,11 +111,11 @@ async function makeProvider(name) {
     };
   }
 
-  if (name === 'cloud') {                         // official WhatsApp Business Cloud API (recommended for live use)
+  if (name === 'cloud') {                         // official WhatsApp Business Cloud API (recommended for live use)[cite: 4, 10]
     const { WA_TOKEN, WA_PHONE_NUMBER_ID, WA_OTP_TEMPLATE, WA_WELCOME_TEMPLATE } = process.env;
     if (!WA_TOKEN || !WA_PHONE_NUMBER_ID || !WA_OTP_TEMPLATE) throw new Error('WA_PROVIDER=cloud needs WA_TOKEN, WA_PHONE_NUMBER_ID and WA_OTP_TEMPLATE in .env');
     const lang = process.env.WA_TEMPLATE_LANG || 'en';
-    const version = process.env.WA_GRAPH_VERSION || 'v21.0';   // check Meta's docs for the current version
+    const version = process.env.WA_GRAPH_VERSION || 'v21.0';   // check Meta's docs for the current version[cite: 4, 10]
     const call = async (to, template) => {
       const res = await fetch(`https://graph.facebook.com/${version}/${WA_PHONE_NUMBER_ID}/messages`, {
         method: 'POST',
@@ -129,13 +129,18 @@ async function makeProvider(name) {
     };
     return {
       name, ready: () => true,
-      sendOtp: ({ phone, otp }) => call(phone, {
-        name: WA_OTP_TEMPLATE, language: { code: lang },
-        components: [
-          { type: 'body', parameters: [{ type: 'text', text: otp }] },
-          { type: 'button', sub_type: 'url', index: '0', parameters: [{ type: 'text', text: otp }] }
-        ]
-      }),
+      sendOtp: ({ phone, otp }) => {
+        const templateData = {
+          name: WA_OTP_TEMPLATE,
+          language: { code: lang }
+        };
+        if (WA_OTP_TEMPLATE !== 'hello_world') {
+          templateData.components = [
+            { type: 'body', parameters: [{ type: 'text', text: otp }] }
+          ];
+        }
+        return call(phone, templateData);
+      },
       sendWelcome: async ({ phone, name: n }) => {
         if (!WA_WELCOME_TEMPLATE) return;
         await call(phone, { name: WA_WELCOME_TEMPLATE, language: { code: lang }, components: [{ type: 'body', parameters: [{ type: 'text', text: n }] }] });
