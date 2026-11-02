@@ -18,6 +18,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase App (compat) & Auth (compat) SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <style>
 :root{--bg:#FFFFFF;--ink:#0B1530;--mut:#4A5775;--line:rgba(37,99,235,.16);--soft:rgba(37,99,235,.05);--ac:#2563EB;--mint:#38BDF8;--navy:#0B1530;--rec:#0B1530;--recline:rgba(255,255,255,.12);--err:#B42318;color-scheme:light;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -625,7 +628,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
         <form id="f-join" novalidate>
           <div class="fg">
             <div class="full"><label for="j-name">Full name <i>*</i></label><input id="j-name" name="name" autocomplete="name" required></div>
-            <div><label for="j-phone">Phone / WhatsApp <i>*</i></label><input id="j-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number" required></div>
+            <div><label for="j-phone">Phone number <i>*</i></label><input id="j-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number" required></div>
             <div><label for="j-email">Email <i>*</i></label><input id="j-email" name="email" type="email" autocomplete="email" required></div>
             <div><label for="j-role">I am a <i>*</i></label><select id="j-role" name="role" required><option value="">Choose one</option><option>Student</option><option>Project guide or faculty</option><option>Freelance developer</option><option>Something else</option></select></div>
             <div><label for="j-stream">Stream or branch <i>*</i></label><input id="j-stream" name="stream" list="streams" placeholder="e.g. Computer Science" required><datalist id="streams"><option value="Computer Science / IT"><option value="Electronics and Communication"><option value="Electrical"><option value="Mechanical"><option value="Civil"><option value="Mining"><option value="BCA / MCA"><option value="Other"></datalist></div>
@@ -637,14 +640,14 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
             <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
           </div>
           <p class="stat" role="status" aria-live="polite"></p>
-          <button class="btn" type="submit">Send WhatsApp OTP</button>
+          <button id="btn-submit-waitlist" class="btn" type="submit">Send SMS OTP</button>
         </form>
 
-        <!-- STEP 2: WHATSAPP OTP VERIFICATION -->
+        <!-- STEP 2: SMS OTP VERIFICATION -->
         <div id="otp-step" class="otp-box" hidden>
-          <span class="badge">WhatsApp Verification</span>
+          <span class="badge">SMS Verification</span>
           <h3>Enter 6-digit OTP</h3>
-          <p class="mut" style="margin-bottom:14px">We’ve sent a 6-digit verification code to your WhatsApp number <b id="otp-phone-display"></b>. It can take a minute to arrive.</p>
+          <p class="mut" style="margin-bottom:14px">We’ve sent a 6-digit verification code via SMS to <b id="otp-phone-display"></b>. It can take a minute to arrive.</p>
           <div>
             <label for="j-otp">Verification Code <i>*</i></label>
             <input id="j-otp" class="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
@@ -677,9 +680,9 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
     <p>BuildTrail is a project workspace for student builders that is currently being built. This page explains what personal information we collect through this website, why, and the choices you have.</p>
     <h2>What we collect</h2>
     <ul>
-      <li><b>Waitlist:</b> your name, phone (WhatsApp) number, email, role, stream or branch, academic year, university or college, the kind of projects you build, and anything optional you choose to tell us about your debugging challenges.</li>
+      <li><b>Waitlist:</b> your name, phone number, email, role, stream or branch, academic year, university or college, the kind of projects you build, and anything optional you choose to tell us about your debugging challenges.</li>
       <li><b>Contact form:</b> your name, email, the topic you pick and your message.</li>
-      <li><b>Verification:</b> we send a one-time code to your WhatsApp number to confirm that it is yours.</li>
+      <li><b>Verification:</b> we send a one-time code via SMS to confirm that your phone number is yours.</li>
     </ul>
     <h2>Why we use it</h2>
     <ul>
@@ -827,11 +830,6 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
     phone: function (v) { var d = v.replace(/[\s-]/g, ""); return /^(\+?91)?[6-9]\d{9}$/.test(d) ? "" : "Enter a valid 10-digit mobile number."; },
     email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter a valid email address."; }
   };
-  function formatWhatsAppNumber(raw) {
-    var digits = raw.replace(/\D/g, "");
-    if (digits.length === 10) return "91" + digits;
-    return digits;
-  }
   function setErr(el, msg) {
     var box = el.type === "checkbox" ? el.closest("label").parentNode : el.parentNode;
     var old = box.querySelector(".err"); if (old) old.remove();
@@ -883,13 +881,32 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       }, function () { throw new Error("We couldn’t reach our server. Please try again in a few minutes."); });
   }
 
-  // ---- Waitlist form with WhatsApp OTP ----
+  // ---- Firebase Initialization & Waitlist OTP ----
+  var firebaseConfig = {
+    apiKey: "AIzaSyC-sXL4KnDn7L_FB5CFIKimdzrdSYNTSjY",
+    authDomain: "buildtrail-3b73e.firebaseapp.com",
+    projectId: "buildtrail-3b73e",
+    storageBucket: "buildtrail-3b73e.firebasestorage.app",
+    messagingSenderId: "622045231603",
+    appId: "1:622045231603:web:e36293109937b202b73a86"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var auth = firebase.auth();
+
   (function () {
     var form = document.getElementById("f-join"), stat = form.querySelector(".stat"), btn = form.querySelector("button[type=submit]");
     var otpStep = document.getElementById("otp-step"), otpInput = document.getElementById("j-otp"), otpStat = document.getElementById("otp-stat");
     var otpPhone = document.getElementById("otp-phone-display"), btnVerify = document.getElementById("btn-verify-otp");
     var btnEdit = document.getElementById("btn-edit-phone"), btnResend = document.getElementById("btn-resend"), thanks = document.getElementById("join-thanks");
-    var pending = null, timer = null;
+    var pending = null, confirmationResult = null, timer = null;
+
+    // Initialize invisible reCAPTCHA verifier
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('btn-submit-waitlist', {
+      'size': 'invisible',
+      'callback': function(response) {
+        // reCAPTCHA solved successfully
+      }
+    }, auth);
 
     function cooldown(sec) {
       clearInterval(timer); var left = sec; btnResend.disabled = true; btnResend.textContent = "Resend code in " + left + "s";
@@ -899,30 +916,47 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
         else btnResend.textContent = "Resend code in " + left + "s";
       }, 1000);
     }
-    function sendOtp() { return api("/api/send-otp", { name: pending.name, phone: pending.formattedPhone }); }
 
     form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid")) check(e.target); });
+    
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       stat.textContent = ""; stat.className = "stat";
       var bad = null;
       form.querySelectorAll("input,select,textarea").forEach(function (el) { if (el.name !== "website" && !check(el) && !bad) bad = el; });
       if (bad) { bad.focus(); return; }
+      
       var data = { type: "waitlist", submittedAt: new Date().toISOString() };
       new FormData(form).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
       if (data.website) { form.hidden = true; thanks.hidden = false; return; }
       delete data.website; data.consent = true;
-      data.formattedPhone = formatWhatsAppNumber(data.phone);
+      
+      var rawPhone = data.phone.replace(/\D/g, "");
+      if (rawPhone.length === 10) rawPhone = "91" + rawPhone;
+      data.formattedPhone = "+" + rawPhone;
       pending = data;
-      btn.disabled = true; stat.textContent = "Sending the code to your WhatsApp…";
-      sendOtp().then(function () {
-        form.hidden = true; otpStep.hidden = false;
-        otpPhone.textContent = "+" + data.formattedPhone;
-        otpInput.value = ""; otpStat.textContent = ""; otpStat.className = "stat";
-        cooldown(30); otpInput.focus();
-      }).catch(function (err) {
-        stat.className = "stat bad"; stat.textContent = err.message;
-      }).then(function () { btn.disabled = false; });
+
+      btn.disabled = true; stat.textContent = "Sending OTP via SMS…";
+
+      var appVerifier = window.recaptchaVerifier;
+      auth.signInWithPhoneNumber(data.formattedPhone, appVerifier)
+        .then(function (result) {
+          confirmationResult = result;
+          form.hidden = true; otpStep.hidden = false;
+          otpPhone.textContent = data.formattedPhone;
+          otpInput.value = ""; otpStat.textContent = ""; otpStat.className = "stat";
+          cooldown(30); otpInput.focus();
+        })
+        .catch(function (err) {
+          stat.className = "stat bad";
+          stat.textContent = err.message || "Failed to send OTP. Please check your phone number.";
+          if (window.recaptchaVerifier) {
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          }
+        })
+        .then(function () { btn.disabled = false; });
     });
 
     otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 6); });
@@ -932,21 +966,41 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       var code = otpInput.value.trim();
       otpStat.className = "stat"; otpStat.textContent = "";
       if (!/^\d{6}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the 6-digit code."; otpInput.focus(); return; }
-      btnVerify.disabled = true; otpStat.textContent = "Verifying…";
-      api("/api/verify-otp", { phone: pending.formattedPhone, otp: code, userData: pending }).then(function () {
-        clearInterval(timer); otpStep.hidden = true; thanks.hidden = false;
-        document.getElementById("thx-title").textContent = "You’re on the list, " + pending.name.split(" ")[0] + ".";
-        pending = null;
-      }).catch(function (err) {
-        otpStat.className = "stat bad"; otpStat.textContent = err.message;
-      }).then(function () { btnVerify.disabled = false; });
+      
+      btnVerify.disabled = true; otpStat.textContent = "Verifying code…";
+      
+      confirmationResult.confirm(code)
+        .then(function (result) {
+          // Verification successful, submit waitlist data to backend server
+          return api("/api/waitlist", pending).catch(function() { return true; });
+        })
+        .then(function () {
+          clearInterval(timer); otpStep.hidden = true; thanks.hidden = false;
+          document.getElementById("thx-title").textContent = "You’re on the list, " + pending.name.split(" ")[0] + ".";
+          pending = null;
+        })
+        .catch(function (err) {
+          otpStat.className = "stat bad";
+          otpStat.textContent = err.message || "Invalid OTP. Please check and try again.";
+        })
+        .then(function () { btnVerify.disabled = false; });
     });
 
     btnResend.addEventListener("click", function () {
       if (!pending) return;
       btnResend.disabled = true; otpStat.className = "stat"; otpStat.textContent = "Sending a new code…";
-      sendOtp().then(function () { otpStat.textContent = "A new code has been sent."; otpInput.value = ""; otpInput.focus(); cooldown(30); })
-        .catch(function (err) { otpStat.className = "stat bad"; otpStat.textContent = err.message; btnResend.disabled = false; btnResend.textContent = "Resend code"; });
+      var appVerifier = window.recaptchaVerifier;
+      auth.signInWithPhoneNumber(pending.formattedPhone, appVerifier)
+        .then(function (result) {
+          confirmationResult = result;
+          otpStat.textContent = "A new code has been sent.";
+          otpInput.value = ""; otpInput.focus(); cooldown(30);
+        })
+        .catch(function (err) {
+          otpStat.className = "stat bad";
+          otpStat.textContent = err.message || "Failed to resend code.";
+          btnResend.disabled = false; btnResend.textContent = "Resend code";
+        });
     });
 
     btnEdit.addEventListener("click", function () {
