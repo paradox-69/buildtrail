@@ -636,7 +636,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
           <p class="mut" style="margin-bottom:14px">We’ve sent a 6-digit verification code to <b id="otp-email-display"></b>.</p>
           <div>
             <label for="j-otp">Verification Code <i>*</i></label>
-            <input id="j-otp" class="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+            <input id="j-otp" class="otp-input" type="text" inputmode="numeric" maxlength="8" placeholder="••••••" autocomplete="one-time-code">
           </div>
           <p id="otp-stat" class="stat" role="status" aria-live="polite"></p>
           <div class="otp-actions">
@@ -822,13 +822,13 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       }
     });
 
-    otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 6); });
+    otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 8); });
     otpInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); btnVerify.click(); } });
 
     btnVerify.addEventListener("click", async function () {
       var code = otpInput.value.trim();
       otpStat.className = "stat"; otpStat.textContent = "";
-      if (!/^\d{6}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the 6-digit code."; otpInput.focus(); return; }
+      if (!/^\d{8}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the code."; otpInput.focus(); return; }
       
       btnVerify.disabled = true; otpStat.textContent = "Verifying code & saving…";
       
