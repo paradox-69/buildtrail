@@ -1,15 +1,18 @@
-// BuildTrail backend: Waitlist database & Contact form storage.
-// Run: npm install && npm start   (needs Node 18 or newer, "type": "module" in package.json)
+// BuildTrail backend: Waitlist database & Contact form storage + WhatsApp OTP.
+// Run: npm install express cors dotenv whatsapp-web.js qrcode-terminal
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import pkg from 'whatsapp-web.js';
+const { Client, LocalAuth } = pkg;
+import qrcode from 'qrcode-terminal';
 
 dotenv.config();
 
-// ---------- Settings (all can be changed in .env) ----------
+// ---------- Settings ----------
 const PORT = Number(process.env.PORT) || 5000;
 const IS_PROD = process.env.NODE_ENV === 'production';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -18,15 +21,33 @@ const DATA_DIR = path.resolve(process.env.DATA_DIR || './data');
 
 const MIN = 60 * 1000, HOUR = 60 * MIN;
 
+// ---------- WhatsApp Client Setup ----------
+const client = new Client({
+  authStrategy: new LocalAuth(),
+  puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }
+});
+
+client.on('qr', (qr) => {
+  console.log('\n--- SCAN THIS QR CODE WITH WHATSAPP ---');
+  qrcode.generate(qr, { small: true });
+});
+
+client.on('ready', () => {
+  console.log('✅ WhatsApp Client is ready!');
+});
+
+client.initialize();
+
+// Temporary store for OTPs: phone -> { otp, expires, data }
+const pendingOtps = new Map();
+
 // ---------- Small helpers ----------
 class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
 }
 const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
-// single-line text: removes control characters, trims, limits length
 const str = (v, max) => (typeof v === 'string' ? v.replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max) : '');
-// multi-line text: keeps line breaks
 const multiline = (v, max) => (typeof v === 'string' ? v.replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, ' ').trim().slice(0, max) : '');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -44,9 +65,9 @@ const safeEqual = (a, b) => {
   return x.length === y.length && crypto.timingSafeEqual(x, y);
 };
 
-// ---------- Rate limiting (in memory) ----------
+// ---------- Rate limiting ----------
 const buckets = new Map();
-function hit(key, limit, windowMs) {            // returns 0 if allowed, else seconds to wait
+function hit(key, limit, windowMs) {
   const now = Date.now();
   const list = (buckets.get(key) || []).filter(t => now - t < windowMs);
   if (list.length >= limit) { buckets.set(key, list); return Math.max(1, Math.ceil((windowMs - (now - list[0])) / 1000)); }
@@ -59,7 +80,7 @@ const ipLimit = (name, max, windowMs) => (req, res, next) => {
   next();
 };
 
-// ---------- Storage: one JSON line per record, survives restarts ----------
+// ---------- Storage ----------
 fs.mkdirSync(DATA_DIR, { recursive: true });
 const FILES = { waitlist: path.join(DATA_DIR, 'waitlist.ndjson'), contacts: path.join(DATA_DIR, 'contacts.ndjson') };
 function readAll(file) {
@@ -92,12 +113,12 @@ function cleanWaitlist(u, phone) {
 // ---------- App ----------
 const app = express();
 app.disable('x-powered-by');
-app.set('trust proxy', Number(process.env.TRUST_PROXY) || 0);   // set TRUST_PROXY=1 when behind Render, Railway, Nginx, etc.
+app.set('trust proxy', Number(process.env.TRUST_PROXY) || 0);
 app.use(cors({
   origin(origin, cb) {
-    if (!origin) return cb(null, true);                              // non-browser tools
+    if (!origin) return cb(null, true);
     if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
-    if (!IS_PROD && ALLOWED_ORIGINS.length === 0) return cb(null, true); // local development
+    if (!IS_PROD && ALLOWED_ORIGINS.length === 0) return cb(null, true);
     cb(null, false);
   }
 }));
@@ -105,22 +126,56 @@ app.use(express.json({ limit: '20kb' }));
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
-// 1. Waitlist endpoint (Called after Firebase phone authentication succeeds on frontend)
-app.post('/api/waitlist', ipLimit('waitlist', 10, HOUR), wrap(async (req, res) => {
+// 1. Send WhatsApp OTP endpoint
+app.post('/api/send-whatsapp-otp', ipLimit('send-otp', 5, HOUR), wrap(async (req, res) => {
   const phone = normalizePhone(req.body?.phone);
   const clean = cleanWaitlist(req.body, phone);
   if (clean.error) throw new HttpError(400, clean.error);
 
+  if (onList.has(phone)) {
+    return res.json({ success: true, alreadyJoined: true, message: 'You are already on the waitlist.' });
+  }
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  pendingOtps.set(phone, { otp, expires: Date.now() + 5 * MIN, data: clean.value });
+
+  try {
+    const chatId = `${phone}@c.us`;
+    const message = `*BuildTrail Verification*\n\nYour 6-digit OTP is: *${otp}*\nValid for 5 minutes.`;
+    await client.sendMessage(chatId, message);
+    res.json({ success: true, message: 'OTP sent via WhatsApp.' });
+  } catch (err) {
+    console.error('WhatsApp send error:', err);
+    throw new HttpError(500, 'Failed to send WhatsApp message. Make sure the number is correct.');
+  }
+}));
+
+// 2. Verify WhatsApp OTP & Save to Waitlist
+app.post('/api/verify-whatsapp-otp', ipLimit('verify-otp', 10, HOUR), wrap(async (req, res) => {
+  const phone = normalizePhone(req.body?.phone);
+  const code = String(req.body?.code || '').trim();
+
+  const record = pendingOtps.get(phone);
+  if (!record || record.expires < Date.now()) {
+    throw new HttpError(400, 'OTP expired or not found. Please request a new code.');
+  }
+  if (record.otp !== code) {
+    throw new HttpError(400, 'Invalid OTP. Please check and try again.');
+  }
+
+  pendingOtps.delete(phone);
+
   if (!onList.has(phone)) {
-    const record = { ...clean.value, verifiedAt: new Date().toISOString() };
-    await save(FILES.waitlist, record);
-    waitlist.push(record);
+    const finalRecord = { ...record.data, verifiedAt: new Date().toISOString() };
+    await save(FILES.waitlist, finalRecord);
+    waitlist.push(finalRecord);
     onList.add(phone);
   }
+
   res.json({ success: true, message: 'You’re on the waitlist.' });
 }));
 
-// 2. Contact form
+// 3. Contact form
 app.post('/api/contact', ipLimit('contact', 10, HOUR), wrap(async (req, res) => {
   const b = req.body || {};
   const rec = { name: str(b.name, 80), email: str(b.email, 120).toLowerCase(), topic: str(b.topic, 60), message: multiline(b.message, 1500) };
@@ -133,7 +188,7 @@ app.post('/api/contact', ipLimit('contact', 10, HOUR), wrap(async (req, res) => 
   res.json({ success: true, message: 'Message received.' });
 }));
 
-// 3. Admin (needs ADMIN_TOKEN in .env; send it as:  Authorization: Bearer <token>)
+// 4. Admin
 function requireAdmin(req, res, next) {
   if (!ADMIN_TOKEN) return res.status(404).json({ error: 'Not found' });
   const h = req.get('authorization') || '';
@@ -141,7 +196,7 @@ function requireAdmin(req, res, next) {
   next();
 }
 function sendCsv(res, rows, cols, filename) {
-  const cell = v => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }; // stops spreadsheet formula injection
+  const cell = v => { let s = String(v ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
   const csv = [cols.join(',')].concat(rows.map(r => cols.map(c => cell(r[c])).join(','))).join('\n');
   res.set({ 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="${filename}"` }).send(csv);
 }
@@ -162,14 +217,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong. Please try again.' });
 });
 
-// ---------- Housekeeping ----------
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, list] of buckets) if (!list.length || now - list[list.length - 1] > HOUR) buckets.delete(key);
-}, 5 * MIN).unref();
-
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
-  if (IS_PROD && ALLOWED_ORIGINS.length === 0) console.warn('⚠️  ALLOWED_ORIGINS is empty, so browsers on your website will be blocked. Set it in .env.');
-  if (!ADMIN_TOKEN) console.log('ℹ️  Admin routes are off. Set ADMIN_TOKEN in .env to read the waitlist.');
 });
