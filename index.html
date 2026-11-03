@@ -146,6 +146,12 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offs
 .excap{margin:18px 0 0;font-size:10.5px;font-weight:600;letter-spacing:.2em;color:#8E9AB4}
 .sig{margin:0;font-weight:500;color:var(--ink)}
 
+/* OTP Verification Box */
+.otp-box{padding:8px 0}
+.otp-box .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.1);color:var(--ac);font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase}
+.otp-input{font-size:24px;font-weight:600;letter-spacing:.35em;text-align:center;max-width:240px;margin:10px 0 6px}
+.otp-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+
 .ben{display:grid;grid-template-columns:1fr 1fr;margin-top:34px;border-top:2px solid var(--ink)}
 .ben>div{padding:26px 34px 28px 0;border-bottom:1px solid var(--line)}
 .ben>div:nth-child(even){padding:26px 0 28px 34px;border-left:1px solid var(--line)}
@@ -602,7 +608,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
         <p class="note">You only fill this in once. We use these details only to contact you about BuildTrail.</p>
       </div>
       <div class="formcard">
-        <!-- DIRECT WAITLIST SUBMISSION FORM -->
+        <!-- STEP 1: WAITLIST FORM -->
         <form id="f-join" novalidate>
           <div class="fg">
             <div class="full"><label for="j-name">Full name <i>*</i></label><input id="j-name" name="name" autocomplete="name" required></div>
@@ -618,10 +624,27 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
             <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
           </div>
           <p class="stat" role="status" aria-live="polite"></p>
-          <button id="btn-submit-waitlist" class="btn" type="submit">Join Waitlist</button>
+          <button id="btn-submit-waitlist" class="btn" type="button">Send Email OTP</button>
         </form>
 
-        <!-- THANKS MESSAGE -->
+        <!-- STEP 2: EMAIL OTP VERIFICATION -->
+        <div id="otp-step" class="otp-box" hidden>
+          <span class="badge">Email Verification</span>
+          <h3>Enter 6-digit OTP</h3>
+          <p class="mut" style="margin-bottom:14px">We’ve sent a 6-digit verification code to <b id="otp-email-display"></b>.</p>
+          <div>
+            <label for="j-otp">Verification Code <i>*</i></label>
+            <input id="j-otp" class="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+          </div>
+          <p id="otp-stat" class="stat" role="status" aria-live="polite"></p>
+          <div class="otp-actions">
+            <button id="btn-verify-otp" class="btn" type="button">Verify & Join Waitlist</button>
+            <button id="btn-resend" class="btn sec-btn" type="button" disabled>Resend code</button>
+            <button id="btn-edit-email" class="btn sec-btn" type="button">Change Email</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: THANKS MESSAGE -->
         <div class="thanks" id="join-thanks" hidden>
           <div class="tk"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#0B1530" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <h3 id="thx-title">You’re on the list.</h3>
@@ -646,7 +669,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
     </ul>
     <h2>Why we use it</h2>
     <ul>
-      <li>To add you to the waitlist.</li>
+      <li>To verify your email and add you to the waitlist.</li>
       <li>To contact you about early access, launch updates and BuildTrail.</li>
       <li>To understand who we are building for, so we can decide what to build first.</li>
       <li>To reply to your messages.</li>
@@ -686,7 +709,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
   var CONFIG = {
     API_BASE: (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:")
       ? "http://localhost:5000"
-      : "https://buildtrail.onrender.com"
+      : "https://your-backend-url.onrender.com" // Yahan apna backend URL daal dena
   };
 
   var VIEWS = ["home", "about", "contact", "join", "privacy", "terms"];
@@ -749,15 +772,26 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       }, function () { throw new Error("We couldn’t reach our server. Please try again in a few minutes."); });
   }
 
-  // ---- Direct Waitlist Submission Logic ----
+  // ---- Email OTP Waitlist Logic ----
   (function () {
     var form = document.getElementById("f-join"), stat = form.querySelector(".stat"), btn = document.getElementById("btn-submit-waitlist");
-    var thanks = document.getElementById("join-thanks");
+    var otpStep = document.getElementById("otp-step"), otpInput = document.getElementById("j-otp"), otpStat = document.getElementById("otp-stat");
+    var otpEmail = document.getElementById("otp-email-display"), btnVerify = document.getElementById("btn-verify-otp");
+    var btnEdit = document.getElementById("btn-edit-email"), btnResend = document.getElementById("btn-resend"), thanks = document.getElementById("join-thanks");
+    var pendingData = null, timer = null;
+
+    function cooldown(sec) {
+      clearInterval(timer); var left = sec; btnResend.disabled = true; btnResend.textContent = "Resend code in " + left + "s";
+      timer = setInterval(function () {
+        left--;
+        if (left <= 0) { clearInterval(timer); btnResend.disabled = false; btnResend.textContent = "Resend code"; }
+        else btnResend.textContent = "Resend code in " + left + "s";
+      }, 1000);
+    }
 
     form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid")) check(e.target); });
     
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    btn.addEventListener("click", function () {
       stat.textContent = ""; stat.className = "stat";
       var bad = null;
       form.querySelectorAll("input,select,textarea").forEach(function (el) { if (el.name !== "website" && !check(el) && !bad) bad = el; });
@@ -767,19 +801,65 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       new FormData(form).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
       if (data.website) { form.hidden = true; thanks.hidden = false; return; }
       delete data.website; data.consent = true;
+      pendingData = data;
 
-      btn.disabled = true; stat.textContent = "Joining waitlist…";
+      btn.disabled = true; stat.textContent = "Sending OTP to email…";
 
-      api("/api/submit-waitlist", data)
+      api("/api/send-email-otp", { email: data.email })
         .then(function (res) {
-          form.hidden = true; thanks.hidden = false;
-          document.getElementById("thx-title").textContent = "You’re on the list, " + data.name.split(" ")[0] + ".";
+          form.hidden = true; otpStep.hidden = false;
+          otpEmail.textContent = data.email;
+          otpInput.value = ""; otpStat.textContent = ""; otpStat.className = "stat";
+          cooldown(30); otpInput.focus();
         })
         .catch(function (err) {
           stat.className = "stat bad";
-          stat.textContent = err.message || "Failed to join waitlist. Please try again.";
+          stat.textContent = err.message || "Failed to send OTP to email.";
         })
         .then(function () { btn.disabled = false; });
+    });
+
+    otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 6); });
+    otpInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); btnVerify.click(); } });
+
+    btnVerify.addEventListener("click", function () {
+      var code = otpInput.value.trim();
+      otpStat.className = "stat"; otpStat.textContent = "";
+      if (!/^\d{6}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the 6-digit code."; otpInput.focus(); return; }
+      
+      btnVerify.disabled = true; otpStat.textContent = "Verifying code & saving…";
+      
+      api("/api/verify-and-join", { otp: code, userData: pendingData })
+        .then(function () {
+          clearInterval(timer); otpStep.hidden = true; thanks.hidden = false;
+          document.getElementById("thx-title").textContent = "You’re on the list, " + pendingData.name.split(" ")[0] + ".";
+          pendingData = null;
+        })
+        .catch(function (err) {
+          otpStat.className = "stat bad";
+          otpStat.textContent = err.message || "Invalid OTP. Please check and try again.";
+        })
+        .then(function () { btnVerify.disabled = false; });
+    });
+
+    btnResend.addEventListener("click", function () {
+      if (!pendingData) return;
+      btnResend.disabled = true; otpStat.className = "stat"; otpStat.textContent = "Sending a new code…";
+      api("/api/send-email-otp", { email: pendingData.email })
+        .then(function () {
+          otpStat.textContent = "A new code has been sent to your email.";
+          otpInput.value = ""; otpInput.focus(); cooldown(30);
+        })
+        .catch(function (err) {
+          otpStat.className = "stat bad";
+          otpStat.textContent = err.message || "Failed to resend code.";
+          btnResend.disabled = false; btnResend.textContent = "Resend code";
+        });
+    });
+
+    btnEdit.addEventListener("click", function () {
+      clearInterval(timer); otpStep.hidden = true; form.hidden = false; stat.textContent = "";
+      document.getElementById("j-email").focus();
     });
   })();
 
