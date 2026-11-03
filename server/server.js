@@ -17,7 +17,12 @@ const client = new Client({
     puppeteer: {
         headless: true,
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+        args: [
+  '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
+  '--disable-gpu', '--no-zygote', '--single-process',
+  '--disable-extensions', '--disable-background-networking',
+  '--disable-default-apps', '--mute-audio', '--no-first-run'
+]
     }
 });
 
