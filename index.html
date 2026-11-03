@@ -709,7 +709,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
 <script>
   // Supabase credentials properly integrated
   const SUPABASE_URL = "https://edqfgxeynzwefwjzmdwb.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_LQE0rbXoAM99_wVGpb34RA_8Kqxn..."; // Apni actual publishable key yahan dalein
+  const SUPABASE_ANON_KEY = "sb_publishable_LQEOrbXoAM99_wVgpb34RA_8KqxnHJV"; // Apni actual publishable key yahan dalein
 
   var CONFIG = {
     API_BASE: (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:")
@@ -800,7 +800,7 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       delete data.website; data.consent = true;
       pendingData = data;
 
-      btn.disabled = true; stat.textContent = "Sending OTP to email via Supabase…";
+      btn.disabled = true; stat.textContent = "Sending OTP to email";
 
       const { error } = await supabaseClient.auth.signInWithOtp({
         email: data.email,
