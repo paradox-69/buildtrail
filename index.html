@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BuildTrail</title>
+<title>BuildTrail — Launching soon</title>
 <meta name="description" content="BuildTrail is the project workspace for student builders: roadmaps, bug records, retest proof and guide-ready reports. Join the waitlist.">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BuildTrail">
-<meta property="og:title" content="BuildTrail">
+<meta property="og:title" content="BuildTrail — Launching soon">
 <meta property="og:description" content="The project workspace for student builders: roadmaps, bug records, retest proof and guide-ready reports.">
 <meta property="og:url" content="https://yourdomain.in/">
 <meta property="og:image" content="https://yourdomain.in/og.jpg">
@@ -17,6 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Supabase JS SDK CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#FFFFFF;--ink:#0B1530;--mut:#4A5775;--line:rgba(37,99,235,.16);--soft:rgba(37,99,235,.05);--ac:#2563EB;--mint:#38BDF8;--navy:#0B1530;--rec:#0B1530;--recline:rgba(255,255,255,.12);--err:#B42318;color-scheme:light;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -273,7 +275,7 @@ h1 em,h2 em{background:linear-gradient(100deg,#1D4ED8,#0EA5E9);-webkit-backgroun
 .eyebrow:before{background:linear-gradient(90deg,#2563EB,#38BDF8);border-radius:2px}
 .btn{position:relative;overflow:hidden;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;box-shadow:0 16px 30px -14px rgba(37,99,235,.75);transition:transform .2s,box-shadow .2s}
 .btn:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
-.btn:hover{transform:translateY(-3px);box-shadow:0 22px 36px -14px rgba(37,99,235,.85)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 22px 36px -14px rgba(29,78,216,.85)}
 .btn:hover:after{transform:translateX(120%)}
 .btn.sec-btn{box-shadow:none}
 .btn.sec-btn:after{display:none}
@@ -639,7 +641,6 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
           <p id="otp-stat" class="stat" role="status" aria-live="polite"></p>
           <div class="otp-actions">
             <button id="btn-verify-otp" class="btn" type="button">Verify & Join Waitlist</button>
-            <button id="btn-resend" class="btn sec-btn" type="button" disabled>Resend code</button>
             <button id="btn-edit-email" class="btn sec-btn" type="button">Change Email</button>
           </div>
         </div>
@@ -706,11 +707,18 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
 </footer>
 
 <script>
+  // Supabase credentials properly integrated
+  const SUPABASE_URL = "https://edqfgxeynzwefwjzmdwb.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_LQE0rbXoAM99_wVGpb34RA_8Kqxn..."; // Apni actual publishable key yahan dalein
+
   var CONFIG = {
     API_BASE: (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:")
       ? "http://localhost:5000"
-      : "https://your-backend-url.onrender.com" // Yahan apna backend URL daal dena
+      : "https://your-backend-url.onrender.com" // Render backend URL
   };
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let pendingData = null;
 
   var VIEWS = ["home", "about", "contact", "join", "privacy", "terms"];
   var TITLES = { home: "BuildTrail — Launching soon", about: "About us — BuildTrail", contact: "Contact us — BuildTrail", join: "Join the waitlist — BuildTrail", privacy: "Privacy Policy — BuildTrail", terms: "Terms of use — BuildTrail" };
@@ -740,7 +748,6 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
   });
   show(location.hash.slice(1));
 
-  // ---- Validation Helpers ----
   var RULES = {
     phone: function (v) { var d = v.replace(/[\s-]/g, ""); return /^(\+?91)?[6-9]\d{9}$/.test(d) ? "" : "Enter a valid 10-digit mobile number."; },
     email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter a valid email address."; }
@@ -772,26 +779,16 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       }, function () { throw new Error("We couldn’t reach our server. Please try again in a few minutes."); });
   }
 
-  // ---- Email OTP Waitlist Logic ----
+  // ---- Supabase Email OTP Waitlist Logic ----
   (function () {
     var form = document.getElementById("f-join"), stat = form.querySelector(".stat"), btn = document.getElementById("btn-submit-waitlist");
     var otpStep = document.getElementById("otp-step"), otpInput = document.getElementById("j-otp"), otpStat = document.getElementById("otp-stat");
     var otpEmail = document.getElementById("otp-email-display"), btnVerify = document.getElementById("btn-verify-otp");
-    var btnEdit = document.getElementById("btn-edit-email"), btnResend = document.getElementById("btn-resend"), thanks = document.getElementById("join-thanks");
-    var pendingData = null, timer = null;
-
-    function cooldown(sec) {
-      clearInterval(timer); var left = sec; btnResend.disabled = true; btnResend.textContent = "Resend code in " + left + "s";
-      timer = setInterval(function () {
-        left--;
-        if (left <= 0) { clearInterval(timer); btnResend.disabled = false; btnResend.textContent = "Resend code"; }
-        else btnResend.textContent = "Resend code in " + left + "s";
-      }, 1000);
-    }
+    var btnEdit = document.getElementById("btn-edit-email"), thanks = document.getElementById("join-thanks");
 
     form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid")) check(e.target); });
     
-    btn.addEventListener("click", function () {
+    btn.addEventListener("click", async function () {
       stat.textContent = ""; stat.className = "stat";
       var bad = null;
       form.querySelectorAll("input,select,textarea").forEach(function (el) { if (el.name !== "website" && !check(el) && !bad) bad = el; });
@@ -803,62 +800,66 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
       delete data.website; data.consent = true;
       pendingData = data;
 
-      btn.disabled = true; stat.textContent = "Sending OTP to email…";
+      btn.disabled = true; stat.textContent = "Sending OTP to email via Supabase…";
 
-      api("/api/send-email-otp", { email: data.email })
-        .then(function (res) {
-          form.hidden = true; otpStep.hidden = false;
-          otpEmail.textContent = data.email;
-          otpInput.value = ""; otpStat.textContent = ""; otpStat.className = "stat";
-          cooldown(30); otpInput.focus();
-        })
-        .catch(function (err) {
-          stat.className = "stat bad";
-          stat.textContent = err.message || "Failed to send OTP to email.";
-        })
-        .then(function () { btn.disabled = false; });
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email: data.email,
+        options: { shouldCreateUser: true }
+      });
+
+      btn.disabled = false;
+
+      if (error) {
+        stat.className = "stat bad";
+        stat.textContent = error.message || "Failed to send OTP.";
+      } else {
+        form.hidden = true;
+        otpStep.hidden = false;
+        otpEmail.textContent = data.email;
+        otpInput.value = "";
+        otpStat.textContent = "";
+        otpInput.focus();
+      }
     });
 
     otpInput.addEventListener("input", function () { otpInput.value = otpInput.value.replace(/\D/g, "").slice(0, 6); });
     otpInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); btnVerify.click(); } });
 
-    btnVerify.addEventListener("click", function () {
+    btnVerify.addEventListener("click", async function () {
       var code = otpInput.value.trim();
       otpStat.className = "stat"; otpStat.textContent = "";
       if (!/^\d{6}$/.test(code)) { otpStat.className = "stat bad"; otpStat.textContent = "Please enter the 6-digit code."; otpInput.focus(); return; }
       
       btnVerify.disabled = true; otpStat.textContent = "Verifying code & saving…";
       
-      api("/api/verify-and-join", { otp: code, userData: pendingData })
+      const { error: verifyError } = await supabaseClient.auth.verifyOtp({
+        email: pendingData.email,
+        token: code,
+        type: 'email'
+      });
+
+      if (verifyError) {
+        otpStat.className = "stat bad";
+        otpStat.textContent = verifyError.message || "Invalid OTP. Please try again.";
+        btnVerify.disabled = false;
+        return;
+      }
+
+      api("/api/save-waitlist", { userData: pendingData })
         .then(function () {
-          clearInterval(timer); otpStep.hidden = true; thanks.hidden = false;
+          otpStep.hidden = true; thanks.hidden = false;
           document.getElementById("thx-title").textContent = "You’re on the list, " + pendingData.name.split(" ")[0] + ".";
           pendingData = null;
         })
         .catch(function (err) {
           otpStat.className = "stat bad";
-          otpStat.textContent = err.message || "Invalid OTP. Please check and try again.";
-        })
-        .then(function () { btnVerify.disabled = false; });
-    });
-
-    btnResend.addEventListener("click", function () {
-      if (!pendingData) return;
-      btnResend.disabled = true; otpStat.className = "stat"; otpStat.textContent = "Sending a new code…";
-      api("/api/send-email-otp", { email: pendingData.email })
-        .then(function () {
-          otpStat.textContent = "A new code has been sent to your email.";
-          otpInput.value = ""; otpInput.focus(); cooldown(30);
-        })
-        .catch(function (err) {
-          otpStat.className = "stat bad";
-          otpStat.textContent = err.message || "Failed to resend code.";
-          btnResend.disabled = false; btnResend.textContent = "Resend code";
+          otpStat.textContent = err.message || "Failed to save data.";
+          btnVerify.disabled = false;
         });
     });
 
     btnEdit.addEventListener("click", function () {
-      clearInterval(timer); otpStep.hidden = true; form.hidden = false; stat.textContent = "";
+      otpStep.hidden = true; form.hidden = false; stat.textContent = "";
       document.getElementById("j-email").focus();
     });
   })();
@@ -884,6 +885,53 @@ footer{background:radial-gradient(800px 300px at 82% 0,rgba(37,99,235,.38),trans
         .then(function () { btn.disabled = false; });
     });
   })();
+</script>
+<script>
+(function () {
+  var root = document.documentElement; root.classList.add("js");
+  var rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var bar = document.createElement("div"); bar.className = "prog"; document.body.appendChild(bar);
+  function prog() { var h = root.scrollHeight - innerHeight; bar.style.transform = "scaleX(" + (h > 0 ? Math.min(1, scrollY / h) : 0) + ")"; }
+  addEventListener("scroll", prog, { passive: true }); addEventListener("resize", prog); prog();
+  if (rm) return;
+
+  var cards = document.querySelectorAll(".cols>div,.ben>div,.flow li,.list>li");
+  cards.forEach(function (c) { c.classList.add("tcard"); });
+  if (fine) cards.forEach(function (c) {
+    c.addEventListener("pointermove", function (e) {
+      var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.setProperty("--ry", ((x - .5) * 10).toFixed(2) + "deg");
+      c.style.setProperty("--rx", ((.5 - y) * 8).toFixed(2) + "deg");
+      c.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); c.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+    });
+    c.addEventListener("pointerleave", function () { c.style.setProperty("--ry", "0deg"); c.style.setProperty("--rx", "0deg"); });
+  });
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: .12, rootMargin: "0px 0px -6% 0px" });
+    var sel = ".sec .eyebrow,.sec h2,.sec .lede,.cols>div,.ben>div,.flow li,.list>li,.trail li,.faq details,.cmp .r,.perks li,.reach li,.cta-sec .wrap>*,.formcard,.prose>*,.pg .eyebrow,.pg h1,.pg .lede";
+    document.querySelectorAll(sel).forEach(function (el) {
+      var n = 0, s = el; while ((s = s.previousElementSibling)) n++;
+      el.style.setProperty("--d", Math.min(n, 5)); el.classList.add("rv"); io.observe(el);
+    });
+  }
+
+  var t = document.querySelector(".tilt"); if (!t) return;
+  var cx = 0, cy = 0, nx = 0, ny = 0, last = -1e9;
+  if (fine) addEventListener("pointermove", function (e) { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; last = performance.now(); });
+  (function loop(now) {
+    if (t.offsetParent) {
+      var idle = now - last > 2500;
+      var ty = idle ? Math.sin(now / 1800) * 9 - 6 : nx * 24, tx = idle ? Math.cos(now / 2300) * 4 + 4 : -ny * 16;
+      cx += (tx - cx) * .07; cy += (ty - cy) * .07;
+      t.style.setProperty("--rx", cx.toFixed(2) + "deg"); t.style.setProperty("--ry", cy.toFixed(2) + "deg");
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+})();
 </script>
 </body>
 </html>
