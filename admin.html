@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <title>BuildTrail — Admin Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Supabase JS SDK CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   body{font-family:'Poppins',sans-serif;background:#EFEBE3;color:#0B1530;margin:0;padding:30px}
   .wrap{max-width:1200px;margin:0 auto}
@@ -18,16 +20,44 @@
   .section{display:none}
   .section.active{display:block}
   .empty{text-align:center;padding:30px;color:#888;font-style:italic}
+  #auth-overlay{position:fixed;inset:0;background:#EFEBE3;display:flex;align-items:center;justify-content:center;z-index:100;flex-direction:column;text-align:center;padding:20px}
+  .auth-card{background:#fff;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);max-width:400px;width:100%}
+  input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:8px;font:inherit;box-sizing:border-box}
+  .err{color:#B42318;font-size:13px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="wrap">
+
+<!-- ADMIN LOGIN OVERLAY (OTP Based) -->
+<div id="auth-overlay">
+  <div class="auth-card">
+    <h2>Admin Login</h2>
+    <p class="mut">Enter admin email to receive OTP</p>
+    
+    <!-- Step 1: Email Input -->
+    <div id="step-email">
+      <input type="email" id="admin-email" placeholder="Admin Email" required>
+      <button onclick="sendAdminOtp()" style="width:100%;margin-top:10px;">Send OTP</button>
+    </div>
+
+    <!-- Step 2: OTP Input (Hidden initially) -->
+    <div id="step-otp" style="display:none;">
+      <p style="font-size:13px;color:#2563EB;margin-bottom:10px;">OTP sent to your email!</p>
+      <input type="text" id="admin-otp" placeholder="Enter OTP Code" inputmode="numeric" maxlength="8">
+      <button onclick="verifyAdminOtp()" style="width:100%;margin-top:10px;">Verify & Login</button>
+    </div>
+
+    <p id="auth-err" class="err"></p>
+  </div>
+</div>
+
+<div class="wrap" id="admin-content" style="display:none;">
   <h1>BuildTrail Admin Dashboard</h1>
-  <p class="mut">Waitlist users aur Contact messages ka live data (Auto-refreshes every 10s)</p>
+  <p class="mut">Waitlist users ka live data (Auto-refreshes every 10s)</p>
   
   <div class="tabs">
     <button id="btn-w" class="active" onclick="switchTab('waitlist')">Waitlist Users (<span id="count-w">0</span>)</button>
-    <button id="btn-c" onclick="switchTab('contact')">Contact Messages (<span id="count-c">0</span>)</button>
+    <button onclick="handleLogout()" style="background:#B42318;margin-left:auto;">Logout</button>
   </div>
 
   <!-- Waitlist Table -->
@@ -41,80 +71,118 @@
       </tbody>
     </table>
   </div>
-
-  <!-- Contact Table -->
-  <div id="sec-contact" class="section">
-    <table>
-      <thead>
-        <tr><th>Name</th><th>Email</th><th>Topic</th><th>Message</th><th>Submitted At</th></tr>
-      </thead>
-      <tbody id="tb-contact">
-        <tr><td colspan="5" class="empty">Loading contact messages...</td></tr>
-      </tbody>
-    </table>
-  </div>
 </div>
 
 <script>
-  const API = "http://localhost:5000/api/admin";
+  const SUPABASE_URL = "https://edqfgxeynzwefwjzmdwb.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_LQEOrbXoAM99_wVgpb34RA_8KqxnHJV";
+  const ADMIN_EMAIL = "kalervineet4@gmail.com";
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Check if already logged in as Admin
+  async function checkAdminSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session && session.user && session.user.email === ADMIN_EMAIL) {
+      document.getElementById('auth-overlay').style.display = 'none';
+      document.getElementById('admin-content').style.display = 'block';
+      loadData();
+      setInterval(loadData, 10000);
+    } else {
+      document.getElementById('auth-overlay').style.display = 'flex';
+      document.getElementById('admin-content').style.display = 'none';
+    }
+  }
+
+  async function sendAdminOtp() {
+    const email = document.getElementById('admin-email').value.trim();
+    const errEl = document.getElementById('auth-err');
+    errEl.textContent = "";
+
+    if (email !== ADMIN_EMAIL) {
+      errEl.textContent = "Unauthorized email! Access denied.";
+      return;
+    }
+
+    errEl.textContent = "Sending OTP...";
+
+    const { error } = await supabaseClient.auth.signInWithOtp({
+      email: email,
+      options: { shouldCreateUser: false }
+    });
+
+    if (error) {
+      errEl.textContent = "Error: " + error.message;
+    } else {
+      errEl.textContent = "";
+      document.getElementById('step-email').style.display = 'none';
+      document.getElementById('step-otp').style.display = 'block';
+    }
+  }
+
+  async function verifyAdminOtp() {
+    const email = document.getElementById('admin-email').value.trim();
+    const token = document.getElementById('admin-otp').value.trim();
+    const errEl = document.getElementById('auth-err');
+    errEl.textContent = "Verifying...";
+
+    const { data, error } = await supabaseClient.auth.verifyOtp({
+      email: email,
+      token: token,
+      type: 'email'
+    });
+
+    if (error) {
+      errEl.textContent = "Invalid OTP: " + error.message;
+    } else {
+      checkAdminSession();
+    }
+  }
+
+  async function handleLogout() {
+    await supabaseClient.auth.signOut();
+    location.reload();
+  }
 
   function switchTab(tab) {
     document.getElementById('sec-waitlist').classList.toggle('active', tab === 'waitlist');
-    document.getElementById('sec-contact').classList.toggle('active', tab === 'contact');
     document.getElementById('btn-w').classList.toggle('active', tab === 'waitlist');
-    document.getElementById('btn-c').classList.toggle('active', tab === 'contact');
   }
 
   async function loadData() {
     try {
-      // Fetch Waitlist
-      const resW = await fetch(API + '/waitlist');
-      const waitlist = await resW.json();
-      document.getElementById('count-w').textContent = waitlist.length;
+      const { data: waitlist, error } = await supabaseClient
+        .from('waitlist')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      document.getElementById('count-w').textContent = waitlist ? waitlist.length : 0;
       
       const tbWaitlist = document.getElementById('tb-waitlist');
-      if (waitlist.length === 0) {
+      if (!waitlist || waitlist.length === 0) {
         tbWaitlist.innerHTML = `<tr><td colspan="7" class="empty">Abhi tak koi waitlist user register nahi hua hai.</td></tr>`;
       } else {
         tbWaitlist.innerHTML = waitlist.map(u => `
           <tr>
             <td><b>${u.name || '-'}</b></td>
-            <td>+${u.phone || '-'}</td>
+            <td>${u.phone || '-'}</td>
             <td>${u.email || '-'}</td>
             <td>${u.role || '-'}</td>
             <td>${u.stream || '-'}</td>
-            <td>${u.university || u.college || '-'}</td>
-            <td>${u.verifiedAt ? new Date(u.verifiedAt).toLocaleString() : '-'}</td>
-          </tr>
-        `).join('');
-      }
-
-      // Fetch Contacts
-      const resC = await fetch(API + '/contacts');
-      const contacts = await resC.json();
-      document.getElementById('count-c').textContent = contacts.length;
-      
-      const tbContact = document.getElementById('tb-contact');
-      if (contacts.length === 0) {
-        tbContact.innerHTML = `<tr><td colspan="5" class="empty">Abhi tak koi contact message nahi aaya hai.</td></tr>`;
-      } else {
-        tbContact.innerHTML = contacts.map(c => `
-          <tr>
-            <td><b>${c.name || '-'}</b></td>
-            <td>${c.email || '-'}</td>
-            <td>${c.topic || '-'}</td>
-            <td>${c.message || '-'}</td>
-            <td>${c.submittedAt ? new Date(c.submittedAt).toLocaleString() : '-'}</td>
+            <td>${u.university || '-'}</td>
+            <td>${u.created_at ? new Date(u.created_at).toLocaleString() : '-'}</td>
           </tr>
         `).join('');
       }
     } catch (err) {
-      console.error("Error loading admin data:", err);
+      console.error("Error loading admin data:", err.message);
     }
   }
 
-  loadData();
-  setInterval(loadData, 10000); // Auto-refresh every 10 seconds
+  // Run check on page load
+  checkAdminSession();
 </script>
 </body>
 </html>
