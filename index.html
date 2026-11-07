@@ -17,7 +17,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2096%2096%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22fv%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%2328398B%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%23151E55%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%2296%22%20height=%2296%22%20rx=%2222%22%20fill=%22url%28%23fv%29%22/%3E%3Cpath%20d=%22M32%2072V24H49a12%2012%200%200%201%200%2024H54a12%2012%200%200%201%200%2024H32M32%2048H49%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%227%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2224%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2224%22%20r=%222.6%22%20fill=%22%2328398B%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2248%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2248%22%20r=%222.6%22%20fill=%22%2328398B%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2272%22%20r=%226.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2272%22%20r=%222.6%22%20fill=%22%2328398B%22/%3E%3Ccircle%20cx=%2266%22%20cy=%2260%22%20r=%228%22%20fill=%22%23FCF0C8%22%20stroke=%22%23151E55%22%20stroke-width=%223%22/%3E%3Cpath%20d=%22M62.4%2060.2l2.6%202.6%204.6-5.2%22%20fill=%22none%22%20stroke=%22%23151E55%22%20stroke-width=%222.4%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Supabase client library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -70,7 +70,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Poppins', 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-family: 'Hanken Grotesk', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
       font-weight: 300;
       font-size: 17px;
       line-height: 1.6;
@@ -107,21 +107,14 @@
       padding: 0 clamp(20px, 5vw, 48px);
     }
 
-    em {
-      font-family: 'Lora', Georgia, serif;
-      font-style: italic;
-      font-weight: 500;
-    }
-
     .eyebrow {
       display: flex;
       align-items: center;
       gap: 14px;
       margin: 0 0 22px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
       color: var(--mut);
     }
 
@@ -145,18 +138,6 @@
       font-size: clamp(44px, 6.6vw, 92px);
       line-height: 0.99;
       letter-spacing: -0.045em;
-    }
-
-    h1 em,
-    h2 em {
-      color: var(--ac);
-      letter-spacing: -0.02em;
-    }
-
-    h1 em.blk {
-      display: block;
-      font-size: 1.12em;
-      line-height: 1.05;
     }
 
     h2 {
@@ -377,9 +358,9 @@
     }
 
     .rec .id {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.01em;
       color: var(--mint);
     }
 
@@ -475,11 +456,11 @@
     }
 
     .list .n {
-      font-family: 'Lora', Georgia, serif;
-      font-style: italic;
-      font-size: 30px;
-      line-height: 1.2;
-      color: var(--ac);
+      width: 16px;
+      height: 16px;
+      margin-top: 9px;
+      border: 3px solid var(--ac);
+      border-radius: 50%;
     }
 
     .list p {
@@ -496,8 +477,7 @@
       color: var(--ink);
       font-size: 10.5px;
       font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
       padding: 3px 10px;
       border-radius: 99px;
     }
@@ -511,8 +491,8 @@
     .later b,
     .k {
       font-weight: 600;
-      letter-spacing: 0.18em;
-      font-size: 11px;
+      letter-spacing: 0.01em;
+      font-size: 13px;
       color: var(--ink);
       margin-right: 10px;
     }
@@ -797,8 +777,7 @@
 
     .prose .upd {
       font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
       font-weight: 500;
       color: var(--ink);
     }
@@ -817,7 +796,7 @@
       margin: 18px 0 0;
       font-size: 10.5px;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.01em;
       color: #a9b0d4;
     }
 
@@ -837,13 +816,12 @@
       gap: 8px;
       background: rgba(40, 57, 139, 0.1);
       color: var(--ac);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       padding: 6px 12px;
       border-radius: 99px;
       margin-bottom: 16px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
     }
 
     .otp-input {
@@ -928,10 +906,9 @@
     .cmp .h > div {
       padding-top: 15px;
       padding-bottom: 15px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
     }
 
     .cmp .h > div + div {
@@ -993,40 +970,6 @@
 
     .faq {
       border-top: 2px solid var(--ink);
-    }
-
-    .faq details {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .faq summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      padding: 20px 0;
-      font-size: clamp(17px, 2vw, 21px);
-      font-weight: 500;
-      letter-spacing: -0.015em;
-    }
-
-    .faq summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .faq summary:after {
-      content: "+";
-      font-weight: 300;
-      font-size: 26px;
-      line-height: 1;
-      color: var(--mut);
-      flex: none;
-    }
-
-    .faq details[open] summary:after {
-      content: "\2013";
     }
 
     .faq p {
@@ -1129,10 +1072,9 @@
 
     .fgrid h4 {
       margin: 0 0 14px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
       color: #a9b0d4;
     }
 
@@ -1188,8 +1130,8 @@
 
     .fbot b {
       font-weight: 600;
-      letter-spacing: 0.2em;
-      font-size: 11px;
+      letter-spacing: 0.01em;
+      font-size: 13px;
       color: var(--mint);
     }
 
@@ -1337,17 +1279,17 @@
         display: block;
         font-size: 10.5px;
         font-weight: 600;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.01em;
         margin-bottom: 3px;
       }
 
       .cmp .r > div:first-child:before {
-        content: "WITHOUT";
+        content: "Without";
         color: var(--mut);
       }
 
       .cmp .r > div + div:before {
-        content: "WITH BUILDTRAIL";
+        content: "With BuildTrail";
         color: var(--ac);
       }
 
@@ -1504,16 +1446,6 @@
     .mb {
       color: var(--ink);
       border-color: rgba(40, 57, 139, 0.35);
-    }
-
-    /* ---------- Headings and buttons ---------- */
-    h1 em,
-    h2 em {
-      background: linear-gradient(100deg, var(--blueberry-deep), #5568c8);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      padding-right: 0.06em;
     }
 
     .eyebrow:before {
@@ -1913,31 +1845,6 @@
       gap: 12px;
     }
 
-    .faq details {
-      background: var(--cream-soft);
-      border: 1px solid rgba(40, 57, 139, 0.14);
-      border-radius: 18px;
-      padding: 0 26px;
-      transition: box-shadow 0.3s, border-color 0.3s;
-    }
-
-    .faq details[open] {
-      border-color: var(--ac);
-      box-shadow: 0 24px 44px -30px rgba(31, 45, 117, 0.55);
-    }
-
-    .faq summary:after {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(40, 57, 139, 0.09);
-      color: var(--ac);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
     .trail:before {
       background: linear-gradient(var(--ac), var(--tint));
     }
@@ -2017,11 +1924,6 @@
 
     .cta-sec .wrap {
       position: relative;
-    }
-
-    .cta-sec h2 em {
-      background: none;
-      -webkit-text-fill-color: var(--cream);
     }
 
     .cta-sec p {
@@ -2129,6 +2031,33 @@
       background: var(--blueberry);
       color: var(--cream);
     }
+
+    /* FAQ: plain question and answer blocks */
+    .faq {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px 56px;
+      border-top: 0;
+    }
+
+    .qa h3 {
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin: 0 0 8px;
+    }
+
+    .qa p {
+      color: var(--mut);
+      max-width: 52ch;
+    }
+
+    @media (max-width: 760px) {
+      .faq {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
 </style>
 </head>
 <body id="top">
@@ -2157,18 +2086,18 @@
   <section class="wrap hero">
     <div>
       <p class="eyebrow">The project workspace for student builders</p>
-      <h1>From idea to <em class="blk">verified fix.</em></h1>
+      <h1>From idea to verified fix.</h1>
       <p class="lede">Roadmaps, bug records, retest proof and guide-ready reports — one workspace, from your first idea to your final viva.</p>
       <div class="cta"><a class="btn" href="#join" data-nav="join">Join the waitlist</a><a class="lnk" href="#about" data-nav="about">How BuildTrail works</a></div>
-      <p class="status"><i></i>Launching soon · Join the waitlist for early access</p>
+      <p class="status"><i></i>Launching soon. Join the waitlist for early access</p>
     </div>
     <div class="stage"><div class="tilt">
     <aside class="rec" aria-label="Example of a ReproLab issue record">
       <div class="row"><span class="id">ISSUE #014</span><span class="ver"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#151E55" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span></div>
       <h3>Sensor reading drifts after 10 minutes</h3>
-      <dl><div><dt>Code version</dt><dd>a3f9c21</dd></div><div><dt>Evidence</dt><dd>2 photos · 1 log</dd></div><div><dt>Retest</dt><dd class="g">3 of 3 runs stable</dd></div></dl>
-      <svg class="chart" viewBox="0 0 400 112" role="img" aria-label="Sensor readings: rising before the fix, flat after the fix"><path d="M20 84L56 78L92 68L128 56L164 40" fill="none" stroke="#F08A74" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line x1="200" y1="18" x2="200" y2="92" stroke="#fff" stroke-opacity=".35" stroke-dasharray="3 5"/><path d="M236 66L270 68L304 64L338 67L376 65" fill="none" stroke="#FCF0C8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="20" y="104" font-family="Poppins,sans-serif" font-size="10" letter-spacing="1.6" fill="#C7CBE8">BEFORE</text><text x="236" y="104" font-family="Poppins,sans-serif" font-size="10" letter-spacing="1.6" fill="#C7CBE8">AFTER FIX</text></svg>
-    <p class="excap">EXAMPLE RECORD · FOR ILLUSTRATION</p>
+      <dl><div><dt>Code version</dt><dd>a3f9c21</dd></div><div><dt>Evidence</dt><dd>2 photos, 1 log</dd></div><div><dt>Retest</dt><dd class="g">3 of 3 runs stable</dd></div></dl>
+      <svg class="chart" viewBox="0 0 400 112" role="img" aria-label="Sensor readings: rising before the fix, flat after the fix"><path d="M20 84L56 78L92 68L128 56L164 40" fill="none" stroke="#F08A74" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line x1="200" y1="18" x2="200" y2="92" stroke="#fff" stroke-opacity=".35" stroke-dasharray="3 5"/><path d="M236 66L270 68L304 64L338 67L376 65" fill="none" stroke="#FCF0C8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="20" y="104" font-family="Hanken Grotesk, system-ui, sans-serif" font-size="10" fill="#C7CBE8">Before</text><text x="236" y="104" font-family="Hanken Grotesk, system-ui, sans-serif" font-size="10" fill="#C7CBE8">After fix</text></svg>
+    <p class="excap">Example record, for illustration</p>
     </aside>
     <span class="chip c1" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Verified fix</span><span class="chip c2" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Smart Roadmap</span><span class="chip c3" aria-hidden="true"><i class="d"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Guide-ready report</span>
     </div></div>
@@ -2179,7 +2108,7 @@
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">Why BuildTrail</p>
-      <h2>The bug is rarely the real problem. <em>Lost context</em> is.</h2>
+      <h2>The bug is rarely the real problem. Lost context is.</h2>
       <p class="lede" style="margin-bottom:0">Most project trouble comes from what nobody wrote down: how a failure happened, what was tried, and whether the fix really held.</p>
       <div class="cmp">
         <div class="r h"><div>Without BuildTrail</div><div>With BuildTrail</div></div>
@@ -2196,17 +2125,17 @@
     <div class="wrap split">
       <div class="sticky">
         <p class="eyebrow">What we’re building</p>
-        <h2>One workspace. <em>Four</em> things done properly.</h2>
+        <h2>One workspace. Four things done properly.</h2>
         <p class="mut" style="max-width:26em">The first release is deliberately small. It follows a project from the first idea to a report your guide can actually trust.</p>
       </div>
       <div>
         <ol class="list">
-          <li><span class="n">01</span><div><h3>Smart Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a week-by-week plan you can edit.</p></div></li>
-          <li><span class="n">02</span><div><h3>ReproLab</h3><p>Log every bug or hardware failure with steps to reproduce, error logs, code versions, circuit photos and test readings in one place.</p></div></li>
-          <li><span class="n">03</span><div><h3>Verified Fixes<span class="tag">The proof step</span></h3><p>Record the retest result and its evidence, so “fixed” means something you can show.</p></div></li>
-          <li><span class="n">04</span><div><h3>PDF Reports</h3><p>One click gives your guide and teammates a clean report with the full history, without re-explaining anything.</p></div></li>
+          <li><span class="n" aria-hidden="true"></span><div><h3>Smart Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a week-by-week plan you can edit.</p></div></li>
+          <li><span class="n" aria-hidden="true"></span><div><h3>ReproLab</h3><p>Log every bug or hardware failure with steps to reproduce, error logs, code versions, circuit photos and test readings in one place.</p></div></li>
+          <li><span class="n" aria-hidden="true"></span><div><h3>Verified Fixes<span class="tag">The proof step</span></h3><p>Record the retest result and its evidence, so “fixed” means something you can show.</p></div></li>
+          <li><span class="n" aria-hidden="true"></span><div><h3>PDF Reports</h3><p>One click gives your guide and teammates a clean report with the full history, without re-explaining anything.</p></div></li>
         </ol>
-        <p class="later"><span class="k">NEXT UP</span>Team Workspace · Viva Prep · Portfolio Builder</p>
+        <p class="later"><span class="k">Next up</span>Team Workspace, Viva Prep and Portfolio Builder</p>
       </div>
     </div>
   </section>
@@ -2214,47 +2143,47 @@
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">How it works</p>
-      <h2>Five steps, <em>one trail.</em></h2>
+      <h2>Five steps, one trail.</h2>
       <ol class="flow">
-        <li><span class="k">01 · PLAN</span><h3>Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a weekly plan.</p></li>
-        <li><span class="k">02 · LOG</span><h3>Record</h3><p>Capture each failure with steps, logs, code version and photos.</p></li>
-        <li><span class="k">03 · FIX</span><h3>Track</h3><p>Move every issue from Open to Fixed with a timeline of attempts.</p></li>
-        <li><span class="k">04 · VERIFY</span><h3>Prove</h3><p>Retest, attach the evidence, and mark the issue Verified.</p></li>
-        <li><span class="k">05 · SHARE</span><h3>Report</h3><p>Send guides and teammates one clean, shareable PDF.</p></li>
+        <li><span class="k">Plan</span><h3>Roadmap</h3><p>Describe your idea and get milestones, a tech stack and a weekly plan.</p></li>
+        <li><span class="k">Log</span><h3>Record</h3><p>Capture each failure with steps, logs, code version and photos.</p></li>
+        <li><span class="k">Fix</span><h3>Track</h3><p>Move every issue from Open to Fixed with a timeline of attempts.</p></li>
+        <li><span class="k">Verify</span><h3>Prove</h3><p>Retest, attach the evidence, and mark the issue Verified.</p></li>
+        <li><span class="k">Share</span><h3>Report</h3><p>Send guides and teammates one clean, shareable PDF.</p></li>
       </ol>
-      <a class="more" href="#about" data-nav="about">Read the full story →</a>
+      <a class="more" href="#about" data-nav="about">Read the full story</a>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">Who it’s for</p>
-      <h2>Built for the people <em>around a project.</em></h2>
+      <h2>Built for the people around a project.</h2>
       <div class="cols">
-        <div><span class="k">STUDENT TEAMS</span><h3>Project teams</h3><p>Software, embedded and hardware projects: Arduino, ESP32, IoT, robotics and more.</p></div>
-        <div><span class="k">GUIDES AND FACULTY</span><h3>Project guides</h3><p>See progress and verified fixes in a clean read-only report, without chasing updates.</p></div>
-        <div><span class="k">COLLEGES</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
+        <div><span class="k">Student teams</span><h3>Project teams</h3><p>Software, embedded and hardware projects: Arduino, ESP32, IoT, robotics and more.</p></div>
+        <div><span class="k">Guides and faculty</span><h3>Project guides</h3><p>See progress and verified fixes in a clean read-only report, without chasing updates.</p></div>
+        <div><span class="k">Colleges</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
       </div>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap split">
-      <div class="sticky"><p class="eyebrow">FAQ</p><h2>Questions, <em>answered.</em></h2></div>
+      <div class="sticky"><p class="eyebrow">FAQ</p><h2>Questions, answered.</h2></div>
       <div class="faq">
-        <details><summary>What is BuildTrail?</summary><p>A web platform where engineering students and project teams record software bugs and hardware failures, how to reproduce them, and the retest evidence once they’re fixed, then share everything as a report.</p></details>
-        <details><summary>Who is it for?</summary><p>Student project teams, on software and hardware projects. Project guides use the reports, and colleges and departments can follow their teams’ progress.</p></details>
-        <details><summary>Does it work for hardware projects?</summary><p>Yes. ReproLab is designed for circuit photos, test readings and error logs alongside code versions, for projects like Arduino, ESP32, IoT and robotics.</p></details>
-        <details><summary>Is it free?</summary><p>Pricing isn’t final. We plan to offer a free tier for students and will share the details before the public launch.</p></details>
-        <details><summary>When does it launch?</summary><p>We don’t have a public date yet. People on the waitlist hear first.</p></details>
-        <details><summary>How will you use my details?</summary><p>Only to contact you about BuildTrail updates and early access.</p></details>
+        <div class="qa"><h3>What is BuildTrail?</h3><p>A web platform where engineering students and project teams record software bugs and hardware failures, how to reproduce them, and the retest evidence once they’re fixed, then share everything as a report.</p></div>
+        <div class="qa"><h3>Who is it for?</h3><p>Student project teams, on software and hardware projects. Project guides use the reports, and colleges and departments can follow their teams’ progress.</p></div>
+        <div class="qa"><h3>Does it work for hardware projects?</h3><p>Yes. ReproLab is designed for circuit photos, test readings and error logs alongside code versions, for projects like Arduino, ESP32, IoT and robotics.</p></div>
+        <div class="qa"><h3>Is it free?</h3><p>Pricing isn’t final. We plan to offer a free tier for students and will share the details before the public launch.</p></div>
+        <div class="qa"><h3>When does it launch?</h3><p>We don’t have a public date yet. People on the waitlist hear first.</p></div>
+        <div class="qa"><h3>How will you use my details?</h3><p>Only to contact you about BuildTrail updates and early access.</p></div>
       </div>
     </div>
   </section>
 
   <section class="cta-sec">
     <div class="wrap">
-      <h2><em>Launching</em> soon.</h2>
+      <h2>Launching soon.</h2>
       <div><p>Join the waitlist to hear first when BuildTrail opens, and help shape what we build next.</p><a class="btn" href="#join" data-nav="join">Join the waitlist</a></div>
     </div>
   </section>
@@ -2264,13 +2193,13 @@
 <div id="v-about" hidden>
   <section class="wrap pg">
     <p class="eyebrow">About us</p>
-    <h1>The trail behind <em class="blk">every project.</em></h1>
+    <h1>The trail behind every project.</h1>
     <p class="lede">BuildTrail is a web platform that helps engineering students and project teams record, understand and resolve their software bugs and hardware failures, and prove that the fix worked.</p>
   </section>
 
   <section class="sec">
     <div class="wrap split">
-      <div class="sticky"><p class="eyebrow">Why we exist</p><h2>Projects fail in <em>the gaps.</em></h2></div>
+      <div class="sticky"><p class="eyebrow">Why we exist</p><h2>Projects fail in the gaps.</h2></div>
       <div>
         <p>In most student projects, the story of a bug lives in a WhatsApp chat, a notebook page or someone’s memory. A fix gets marked “done”, but nobody can show how it was tested. Guides see the finished demo, not the journey. And the final report gets written in the last week, from memory.</p>
         <p>BuildTrail keeps the trail. Every problem is recorded with the steps to reproduce it, the error logs, the code version and the photos or readings that explain it. When it’s fixed, the retest and its evidence are recorded too, so anyone can understand what happened without asking the team to explain it again.</p>
@@ -2282,13 +2211,13 @@
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">How it works</p>
-      <h2>From first idea to <em>final report.</em></h2>
+      <h2>From first idea to final report.</h2>
       <ol class="trail">
-        <li><span class="k">01 · PLAN</span><h3>Start with a roadmap</h3><p>Create a project and describe your idea. Smart Roadmap suggests milestones, a tech stack and a week-wise plan that you can edit.</p></li>
-        <li><span class="k">02 · LOG</span><h3>Record every failure in ReproLab</h3><p>Capture the steps to reproduce, expected and actual behaviour, error logs, the code version, screenshots, circuit photos and test readings.</p></li>
-        <li><span class="k">03 · FIX</span><h3>Track the fix</h3><p>Each issue moves through Open, In Progress, Fixed and Verified, with a full timeline of what the team tried.</p></li>
-        <li><span class="k">04 · VERIFY</span><h3>Prove it with a retest</h3><p>Record the retest result and attach the supporting evidence. Only then does an issue become Verified.</p></li>
-        <li class="end"><span class="k">05 · SHARE</span><h3>Hand over a report</h3><p>Generate a shareable report or PDF so teammates and project guides get the full context in one go.</p></li>
+        <li><span class="k">Plan</span><h3>Start with a roadmap</h3><p>Create a project and describe your idea. Smart Roadmap suggests milestones, a tech stack and a week-wise plan that you can edit.</p></li>
+        <li><span class="k">Log</span><h3>Record every failure in ReproLab</h3><p>Capture the steps to reproduce, expected and actual behaviour, error logs, the code version, screenshots, circuit photos and test readings.</p></li>
+        <li><span class="k">Fix</span><h3>Track the fix</h3><p>Each issue moves through Open, In Progress, Fixed and Verified, with a full timeline of what the team tried.</p></li>
+        <li><span class="k">Verify</span><h3>Prove it with a retest</h3><p>Record the retest result and attach the supporting evidence. Only then does an issue become Verified.</p></li>
+        <li class="end"><span class="k">Share</span><h3>Hand over a report</h3><p>Generate a shareable report or PDF so teammates and project guides get the full context in one go.</p></li>
       </ol>
     </div>
   </section>
@@ -2296,11 +2225,11 @@
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">Who it’s for</p>
-      <h2>Built for the people <em>around a project.</em></h2>
+      <h2>Built for the people around a project.</h2>
       <div class="cols">
-        <div><span class="k">STUDENT TEAMS</span><h3>Final-year and project teams</h3><p>Software, embedded and hardware projects (Arduino, ESP32, IoT, robotics) that need to keep track of what broke and how it was fixed.</p></div>
-        <div><span class="k">GUIDES AND FACULTY</span><h3>Project guides</h3><p>See a team’s progress and its verified fixes through a clean read-only report, without having to ask for updates.</p></div>
-        <div><span class="k">COLLEGES · LATER</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
+        <div><span class="k">Student teams</span><h3>Final-year and project teams</h3><p>Software, embedded and hardware projects (Arduino, ESP32, IoT, robotics) that need to keep track of what broke and how it was fixed.</p></div>
+        <div><span class="k">Guides and faculty</span><h3>Project guides</h3><p>See a team’s progress and its verified fixes through a clean read-only report, without having to ask for updates.</p></div>
+        <div><span class="k">Colleges, later</span><h3>Departments and labs</h3><p>A shared view across many teams, for departments and labs.</p></div>
       </div>
     </div>
   </section>
@@ -2308,21 +2237,21 @@
   <section class="sec">
     <div class="wrap">
       <p class="eyebrow">For students</p>
-      <h2>How BuildTrail <em>helps you.</em></h2>
+      <h2>How BuildTrail helps you.</h2>
       <p class="lede" style="margin-bottom:0">Less scrambling, fewer repeated mistakes, and a project you can explain with confidence.</p>
       <div class="ben">
-        <div><span class="k">01</span><h3>Never lose a bug’s story</h3><p>Steps, logs, code version, photos and readings for every failure live in one place, so you can return to a problem days later without starting over.</p></div>
-        <div><span class="k">02</span><h3>Know where to start</h3><p>Smart Roadmap turns your idea into milestones, a tech stack and a week-by-week plan, so you stop guessing what to build first.</p></div>
-        <div><span class="k">03</span><h3>Stop fixing the same bug twice</h3><p>Each issue keeps its history, showing what was tried and what finally worked, for you and for your teammates.</p></div>
-        <div><span class="k">04</span><h3>Show proof, not just a demo</h3><p>Retest results and evidence turn “it works” into something your guide can actually see and trust.</p></div>
-        <div><span class="k">05</span><h3>Stay in sync with your team</h3><p>Everyone sees the same status and timeline, so nobody asks “who fixed that?” or “did we test it?” again.</p></div>
-        <div><span class="k">06</span><h3>Finish without the last-week panic</h3><p>Because everything is recorded as you go, your report and your viva answers are already there. One click gives you a PDF.</p></div>
+        <div><h3>Never lose a bug’s story</h3><p>Steps, logs, code version, photos and readings for every failure live in one place, so you can return to a problem days later without starting over.</p></div>
+        <div><h3>Know where to start</h3><p>Smart Roadmap turns your idea into milestones, a tech stack and a week-by-week plan, so you stop guessing what to build first.</p></div>
+        <div><h3>Stop fixing the same bug twice</h3><p>Each issue keeps its history, showing what was tried and what finally worked, for you and for your teammates.</p></div>
+        <div><h3>Show proof, not just a demo</h3><p>Retest results and evidence turn “it works” into something your guide can actually see and trust.</p></div>
+        <div><h3>Stay in sync with your team</h3><p>Everyone sees the same status and timeline, so nobody asks “who fixed that?” or “did we test it?” again.</p></div>
+        <div><h3>Finish without the last-week panic</h3><p>Because everything is recorded as you go, your report and your viva answers are already there. One click gives you a PDF.</p></div>
       </div>
     </div>
   </section>
   <section class="sec" id="founder" hidden>
     <div class="wrap split">
-      <div class="sticky"><p class="eyebrow">Who’s building this</p><h2>The person behind <em>BuildTrail.</em></h2></div>
+      <div class="sticky"><p class="eyebrow">Who’s building this</p><h2>The person behind BuildTrail.</h2></div>
       <div><p id="founder-note" style="font-size:19px"></p><p class="sig" id="founder-sig"></p></div>
     </div>
   </section>
@@ -2334,7 +2263,7 @@
     <div class="split">
       <div>
         <p class="eyebrow">Contact us</p>
-        <h1>Let’s talk <em class="blk">about your project.</em></h1>
+        <h1>Let’s talk about your project.</h1>
         <p class="lede">Running a project team, guiding students or part of a college? We’d like to hear how you handle debugging today.</p>
         <ul class="reach" id="reach" aria-label="Ways to reach us"></ul>
         <p class="note">WhatsApp opens a chat with a short message already filled in.</p>
@@ -2363,7 +2292,7 @@
     <div class="split">
       <div>
         <p class="eyebrow">Join the waitlist</p>
-        <h1>Be first <em class="blk">on the trail.</em></h1>
+        <h1>Be first on the trail.</h1>
         <p class="lede">Tell us a little about yourself. We’ll contact you when BuildTrail opens, and invite some of you to try it early.</p>
         <ul class="perks">
           <li><b>Early access</b>Be among the first to use BuildTrail before the public launch.</li>
@@ -2423,7 +2352,7 @@
 <div id="v-privacy" hidden>
   <section class="wrap pg prose">
     <p class="eyebrow">Legal</p>
-    <h1>Privacy <em class="blk">Policy.</em></h1>
+    <h1>Privacy Policy.</h1>
     <p class="upd">Last updated: November 2026</p>
     <p>BuildTrail is a project workspace for student builders that is currently being built. This page explains what personal information we collect through this website, why, and the choices you have.</p>
     <h2>What we collect</h2>
@@ -2459,7 +2388,7 @@
 <div id="v-terms" hidden>
   <section class="wrap pg prose">
     <p class="eyebrow">Legal</p>
-    <h1>Terms of <em class="blk">use.</em></h1>
+    <h1>Terms of use.</h1>
     <p class="upd">Last updated: November 2026</p>
     <p>By using this website you agree to these terms. If you do not agree, please do not use it.</p>
     <h2>About this website</h2>
@@ -2521,7 +2450,7 @@
         INSTAGRAM: "",     // e.g. https://www.instagram.com/yourhandle
         // Optional founder note on the About page. It only shows when all three are filled.
         FOUNDER_NAME: "",  // e.g. "Your Name"
-        FOUNDER_ROLE: "",  // e.g. "Founder, BuildTrail · BCA student, Jodhpur"
+        FOUNDER_ROLE: "",  // e.g. "Founder, BuildTrail, BCA student, Jodhpur"
         FOUNDER_NOTE: ""   // 2-3 sentences: why you are building BuildTrail
     });
 
@@ -2777,7 +2706,7 @@
       var TILT_CARDS = '.cols>div, .ben>div, .flow li, .list>li';
       var REVEAL_TARGETS = [
         '.sec .eyebrow', '.sec h2', '.sec .lede', '.cols>div', '.ben>div', '.flow li',
-        '.list>li', '.trail li', '.faq details', '.cmp .r', '.perks li', '.reach li',
+        '.list>li', '.trail li', '.qa', '.cmp .r', '.perks li', '.reach li',
         '.cta-sec .wrap>*', '.formcard', '.prose>*', '.pg .eyebrow', '.pg h1', '.pg .lede'
       ].join(',');
 
